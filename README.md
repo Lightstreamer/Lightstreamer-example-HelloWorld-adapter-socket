@@ -130,7 +130,7 @@ The "<b>greetings</b>" item has been subscribed too by the Client, with a schema
 
 The first string is the unique ID of that request and will change every time. Let's respond saying that we accept such subscription. We can do this by typing the following string in the <i>requests/response window</i> and hitting Enter:
 ```cmd
-     10000011b6a823e31|SUB|V
+  10000011b6a823e31|SUB|V
 ```
 
 <i>Note: Replace "10000011b6a823e31" with the actual ID you received, otherwise the subscription will not succeed and you will see a warning in the log window.</i>
@@ -178,6 +178,5 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 # Lightstreamer Compatibility Notes #
 
-- Compatible withLightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.6 or higher.
-- Compatible with Lightstreamer Server Adapter Interface since version 5.2 or higher.
+- Compatible withLightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.4 or higher.
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
