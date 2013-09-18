@@ -171,7 +171,7 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 ## Clients using this Adapter ##
 
-* [Lightstreamer "Hello World" Adapter for Java](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-java)
+* ["Hello World" with Lightstreamer Colosseo](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript)
 
 ## Related projects ##
 
@@ -180,4 +180,6 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 # Lightstreamer Compatibility Notes #
 
+- Compatible withLightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.6 or higher.
+- Compatible with Lightstreamer Server Adapter Interface since version 5.2 or higher.
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
