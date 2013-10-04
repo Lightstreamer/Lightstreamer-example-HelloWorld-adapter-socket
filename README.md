@@ -14,7 +14,7 @@ On the client side, we will keep the same exact HTML front-end used in the two p
 
 On the <b>server side</b>, we will leverage the <b>Lightstreamer Adapter Remoting Infrastructure</b> (ARI):
 
-![General architecture](http://www.lightstreamer.com/docs/articles/DotNET-Data-Adapter_Tutorial_Colosseo/ls-ari.png)
+![General architecture](general_architecture.png)
 
 This is the same architecture used in the [.NET example](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-dotnet), but in this case the Remote Data Adapter is not a .NET application, but any process that opens two sockets with the Proxy Data Adapter and implements the ARI Protocol over TCP. As in the previous examples, we will not code a custom Metadata Adapter, but will use a default one. So the Remote Metadata Adapter will not be present.<br>
 
