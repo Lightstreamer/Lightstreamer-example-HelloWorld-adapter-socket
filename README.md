@@ -67,13 +67,20 @@ Start Lightstreamer Server from a command or shell window (I will call this the 
 
 ```cmd
 [...]
-28.Jul.08 17:56:01,437 < INFO> Lightstreamer Server starting in Moderato edition
-28.Jul.08 17:56:01,468 < WARN> JMX management features not available with the current license
-28.Jul.08 17:56:01,500 < INFO> Started HTML Adaptor for JMX on port 6666
-28.Jul.08 17:56:01,531 < INFO> Started JMXMP Connector for JMX on port 9999
-28.Jul.08 17:56:01,578 < INFO> Loading Metadata Provider PROXY_HELLOWORLD_SOCKETS
-28.Jul.08 17:56:01,578 < INFO> Loading Data Provider PROXY_HELLOWORLD_SOCKETS
-28.Jul.08 17:56:01,593 < INFO> Connecting...
+30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.1.1 build 1623.2
+30.ott.13 17:07:22,286 < INFO> Lightstreamer Server starting in Moderato edition.
+30.ott.13 17:07:22,346 < WARN> Only minimal JMX management support is available with the current license.
+30.ott.13 17:07:22,444 < INFO> Started RMI server for JMX on port 8888.
+30.ott.13 17:07:22,525 < INFO> Bound RMI Connector for JMX on port 8888 (communication on port 8888).
+30.ott.13 17:07:22,568 < INFO> Bound RMI Connector for Platform mbeans on port 8888 (communication on port 8888).
+30.ott.13 17:07:22,574 < INFO> SERVER pool size set by default at 10.
+30.ott.13 17:07:22,696 < INFO> data_provider element without name attribute; using DEFAULT as the default name.
+30.ott.13 17:07:22,699 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+30.ott.13 17:07:22,699 < INFO> Loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
+30.ott.13 17:07:22,706 < INFO> Finished loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
+30.ott.13 17:07:22,736 < INFO> Connecting...
+30.ott.13 17:07:22,740 < INFO> Waiting for a connection on port 7002...
+30.ott.13 17:07:22,741 < INFO> Waiting for a connection on port 7001...
 .
 ```
 
@@ -93,23 +100,34 @@ The Server initialization will complete and in the log window you should see som
 
 ```cmd
 [...]
-28.Jul.08 17:56:01,437 < INFO> Lightstreamer Server starting in Moderato edition
-28.Jul.08 17:56:01,468 < WARN> JMX management features not available with the current license
-28.Jul.08 17:56:01,500 < INFO> Started HTML Adaptor for JMX on port 6666
-28.Jul.08 17:56:01,531 < INFO> Started JMXMP Connector for JMX on port 9999
-28.Jul.08 17:56:01,578 < INFO> Loading Metadata Provider PROXY_HELLOWORLD_SOCKETS
-28.Jul.08 17:56:01,578 < INFO> Loading Data Provider PROXY_HELLOWORLD_SOCKETS
-28.Jul.08 17:56:01,593 < INFO> Connecting...
-28.Jul.08 18:31:05,078 < INFO> Connected
-28.Jul.08 18:31:05,093 < INFO> Loading Metadata Provider STOCKLISTDEMO
-28.Jul.08 18:31:05,093 < INFO> Loading Data Provider STOCKLISTDEMO
-28.Jul.08 18:31:05,234 < INFO> Pump pool size set by default at 1
-28.Jul.08 18:31:05,265 < INFO> Notify receiver '#1' starting...
-28.Jul.08 18:31:05,265 < INFO> Events pool size set by default at 1
-28.Jul.08 18:31:05,265 < INFO> Lightstreamer Server 3.4.8 build 1398 starting...
-28.Jul.08 18:31:05,281 < INFO> Request sender '#1' starting...
-28.Jul.08 18:31:05,281 < INFO> Reply receiver '#1' starting...
-28.Jul.08 18:31:05,312 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ...
+30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.1.1 build 1623.2
+30.ott.13 17:07:22,286 < INFO> Lightstreamer Server starting in Moderato edition.
+30.ott.13 17:07:22,346 < WARN> Only minimal JMX management support is available with the current license.
+30.ott.13 17:07:22,444 < INFO> Started RMI server for JMX on port 8888.
+30.ott.13 17:07:22,525 < INFO> Bound RMI Connector for JMX on port 8888 (communication on port 8888).
+30.ott.13 17:07:22,568 < INFO> Bound RMI Connector for Platform mbeans on port 8888 (communication on port 8888).
+30.ott.13 17:07:22,574 < INFO> SERVER pool size set by default at 10.
+30.ott.13 17:07:22,696 < INFO> data_provider element without name attribute; using DEFAULT as the default name.
+30.ott.13 17:07:22,699 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+30.ott.13 17:07:22,699 < INFO> Loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
+30.ott.13 17:07:22,706 < INFO> Finished loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
+30.ott.13 17:07:22,736 < INFO> Connecting...
+30.ott.13 17:07:22,740 < INFO> Waiting for a connection on port 7002...
+30.ott.13 17:07:22,741 < INFO> Waiting for a connection on port 7001...
+30.ott.13 17:07:47,368 < INFO> Connected on port 7001
+30.ott.13 17:08:02,448 < INFO> Connected on port 7002
+30.ott.13 17:08:02,450 < INFO> Connected
+30.ott.13 17:08:02,451 < INFO> Finished loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+30.ott.13 17:08:02,465 < INFO> Selector pool size set by default at 8.
+30.ott.13 17:08:02,466 < INFO> Selector maximum load set by default at 1000.
+30.ott.13 17:08:02,758 < INFO> Notify receiver '#1' starting...
+30.ott.13 17:08:02,763 < INFO> Request sender '#1' starting...
+30.ott.13 17:08:02,764 < INFO> Events pool size set by default at 8.
+30.ott.13 17:08:02,765 < INFO> Reply receiver '#1' starting...
+30.ott.13 17:08:02,779 < INFO> Pump pool size set by default at 8.
+30.ott.13 17:08:02,795 < INFO> Lightstreamer on Java Virtual Machine: Sun Microsystems Inc., Java HotSpot(TM) 64-Bit Server VM, 20.5-b03, 1.6.0_30-b12 on Windows 7
+30.ott.13 17:08:02,796 < INFO> Lightstreamer Server 5.1.1 build 1623.2 starting...
+30.ott.13 17:08:02,811 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ...
 .
 ```
 
@@ -123,12 +141,12 @@ In the browser window you will see:
 loading...
 loading...
 ```
-The "<b>greetings</b>" item has been subscribed too by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the requets/response window, similar to the following:
+The "<b>greetings</b>" item has been subscribed too by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
 ```cmd
   10000011b6a823e31|SUB|S|greetings
 ```
 
-The first string is the unique ID of that request and will change every time. Let's respond saying that we accept such subscription. We can do this by typing the following string in the <i>requests/response window</i> and hitting Enter:
+The first string is the unique ID of that request and will change every time. Let's respond saying that we accept such subscription. We can do this by typing the following string in the <i>request/response window</i> and hitting Enter:
 ```cmd
   10000011b6a823e31|SUB|V
 ```
@@ -178,5 +196,5 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 # Lightstreamer Compatibility Notes #
 
-- Compatible withLightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.4 or higher.
+- Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.4 or newer.
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
