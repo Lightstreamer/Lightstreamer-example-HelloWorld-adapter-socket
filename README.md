@@ -67,7 +67,7 @@ Start Lightstreamer Server from a command or shell window (I will call this the 
 
 ```cmd
 [...]
-30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.1.1 build 1623.2
+30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.2 a4 build 1648
 30.ott.13 17:07:22,286 < INFO> Lightstreamer Server starting in Moderato edition.
 30.ott.13 17:07:22,346 < WARN> Only minimal JMX management support is available with the current license.
 30.ott.13 17:07:22,444 < INFO> Started RMI server for JMX on port 8888.
