@@ -96,11 +96,23 @@ In the second one (which I will call the "<b>async window</b>") type:
   telnet localhost 7002
 ```
 
+Promptly, the Server will try to initialize our Remote Data Adapter; this will cause a request to be issued in the request/response window, similar to the following:
+```cmd
+  10000014209a460b9|DPI|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS
+```
+
+The first string is the unique ID of that request and will change every time. We must confirm the successful initialization; we can do this by typing the following string in the <i>request/response window</i> and hitting Enter:
+```cmd
+  10000014209a460b9|DPI|V
+```
+
+<i>Note: Replace "10000014209a460b9" with the actual ID you received, otherwise the initialization will not succeed and you will see a warning in the log window.</i>
+
 The Server initialization will complete and in the log window you should see something like this:
 
 ```cmd
 [...]
-30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.1.1 build 1623.2
+30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.2 a4 build 1648
 30.ott.13 17:07:22,286 < INFO> Lightstreamer Server starting in Moderato edition.
 30.ott.13 17:07:22,346 < WARN> Only minimal JMX management support is available with the current license.
 30.ott.13 17:07:22,444 < INFO> Started RMI server for JMX on port 8888.
@@ -126,7 +138,7 @@ The Server initialization will complete and in the log window you should see som
 30.ott.13 17:08:02,765 < INFO> Reply receiver '#1' starting...
 30.ott.13 17:08:02,779 < INFO> Pump pool size set by default at 8.
 30.ott.13 17:08:02,795 < INFO> Lightstreamer on Java Virtual Machine: Sun Microsystems Inc., Java HotSpot(TM) 64-Bit Server VM, 20.5-b03, 1.6.0_30-b12 on Windows 7
-30.ott.13 17:08:02,796 < INFO> Lightstreamer Server 5.1.1 build 1623.2 starting...
+30.ott.13 17:08:02,796 < INFO> Lightstreamer Server 5.2 a4 build 1648 starting...
 30.ott.13 17:08:02,811 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ...
 .
 ```
@@ -141,23 +153,23 @@ In the browser window you will see:
 loading...
 loading...
 ```
-The "<b>greetings</b>" item has been subscribed too by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
+The "<b>greetings</b>" item has been subscribed to by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
 ```cmd
-  10000011b6a823e31|SUB|S|greetings
+  20000014209a460b9|SUB|S|greetings
 ```
 
-The first string is the unique ID of that request and will change every time. Let's respond saying that we accept such subscription. We can do this by typing the following string in the <i>request/response window</i> and hitting Enter:
+Let's respond saying that we accept such subscription. We can do this by typing the following string in the <i>request/response window</i> and hitting Enter:
 ```cmd
-  10000011b6a823e31|SUB|V
+  20000014209a460b9|SUB|V
 ```
 
-<i>Note: Replace "10000011b6a823e31" with the actual ID you received, otherwise the subscription will not succeed and you will see a warning in the log window.</i>
+<i>Note: Again, replace "20000014209a460b9" with the actual ID you received.</i>
 
 Our Remote Data Adapter has now accepted to serve events on the "greetings" item. It's time to inject some events by hand, through the async window. With most telnet applications you will not see anything will typing in the async window, so it is better to use copy and paste. Paste the following string, then hit Enter:
 ```cmd
-  0|UD3|S|greetings|S|10000011b6a823e31|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
+  0|UD3|S|greetings|S|20000014209a460b9|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
 ```
-<i>Note: Make sure to paste everything on a single line (the text above was split on two lines to fit in the page). And again, replace "10000011b6a823e31" with the actual ID you received.</i>
+<i>Note: Make sure to paste everything on a single line. And, of course, replace "20000014209a460b9" with the actual ID you received.</i>
 
 Now look at the browser window and enjoy the results of this effort:
 ```cmd
@@ -167,7 +179,7 @@ Now look at the browser window and enjoy the results of this effort:
 
 We can push more events on the "greetings" item, leveraging the same two fields ("message" and "timestamp") ans sending arbitrary data. For example, paste this in the async window (always on a single line and replacing the ID):
 ```cmd
-  0|UD3|S|greetings|S|10000011b6a823e31|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
+  0|UD3|S|greetings|S|20000014209a460b9|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
 ```
 
 ## The Network Protocol ##
@@ -196,5 +208,5 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 # Lightstreamer Compatibility Notes #
 
-- Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.4 or newer.
+- Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.6 or newer.
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
