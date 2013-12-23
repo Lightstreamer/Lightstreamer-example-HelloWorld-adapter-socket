@@ -1,4 +1,5 @@
 # Lightstreamer - "Hello World" Tutorial - TCP Sockets Adapter #
+<!-- START DESCRIPTION "Hello World" Tutorial -->
 
 This is the third projects in a series aimed at illustrating how to develop Lightstreamer Adapters based on various technologies:
 
@@ -28,6 +29,7 @@ So, what about the <b>Remote Data Adapter</b>? We could implement it in any lang
 Should be fun ...
 
 The Proxy Data Adapter listens on two TCP ports and the Remote Data Adapter has to create two sockets. One socket is used for interactions based on a <b>request/response</b> paradigm (this is a <i>synchronous channel</i>). The other socket is used to deliver <b>asynchronous events</b> from the Remote Adapter to the Proxy Adapter (this is an <i>asynchronous channel</i>). Therefore, our Remote Data Adapter will be comprised of two telnet windows.
+<!-- END DESCRIPTION "Hello World" Tutorial -->
 
 ## Setting Up the System ##
 
@@ -187,7 +189,11 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 ## Clients using this Adapter ##
 
+<!-- START RELATED_ENTRIES -->
+
 * [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript)
+
+<!-- END RELATED_ENTRIES -->
 
 ## Related projects ##
 
