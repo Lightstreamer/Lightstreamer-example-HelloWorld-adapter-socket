@@ -1,22 +1,23 @@
-# Lightstreamer "Hello World" Adapter for Sockets #
+# Lightstreamer - "Hello World" Tutorial - TCP Sockets Adapter #
+<!-- START DESCRIPTION lightstreamer-example-helloworld-adapter-socket -->
 
 This is the third projects in a series aimed at illustrating how to develop Lightstreamer Adapters based on various technologies:
 
-- [Lightstreamer "Hello World" Adapter for Java](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-java): An introduction to Lightstreamer's data model, Java Data Adapters, and Server deployment, through the development of a very basic "Hello World" application.
-- [Lightstreamer "Hello World" Adapter for .NET](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-dotnet): The .NET version of the Data Adapter used in the "Hello World" application, showing both a C# and a Visual Basic port.
+- [Lightstreamer - "Hello World" Tutorial - Java Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-java): An introduction to Lightstreamer's data model, Java Data Adapters, and Server deployment, through the development of a very basic "Hello World" application.
+- [Lightstreamer - "Hello World" Tutorial - .NET Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-dotnet): The .NET version of the Data Adapter used in the "Hello World" application, showing both a C# and a Visual Basic port.
 
 In this third installment, will show a <b>Data Adapter</b> that communicates with the Lightstreamer Server through plain <b>TCP sockets</b>, instead of leveraging higher level abstractions as did with the Java API and the .NET API.<br>
 The rationale for this is to enable the development of Data Adapters based on technologies other than Java and .NET. This way, it is possible to inject real-time updates into Lightstreamer Server from programs written in <b>C, PHP, Ruby,</b> or any other language that allows client <b>TCP socket programming</b>.
 
 ## The Architecture ##
 
-On the client side, we will keep the same exact HTML front-end used in the two previous installments. For an explanation of the HTML/JavaScript code, please see the ["Hello World" with Lightstreamer Colosseo](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript) project.<br>
+On the client side, we will keep the same exact HTML front-end used in the two previous installments. For an explanation of the HTML/JavaScript code, please see the [ightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript) project.<br>
 
 On the <b>server side</b>, we will leverage the <b>Lightstreamer Adapter Remoting Infrastructure</b> (ARI):
 
 ![General architecture](general_architecture.png)
 
-This is the same architecture used in the [.NET example](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-dotnet), but in this case the Remote Data Adapter is not a .NET application, but any process that opens two sockets with the Proxy Data Adapter and implements the ARI Protocol over TCP. As in the previous examples, we will not code a custom Metadata Adapter, but will use a default one. So the Remote Metadata Adapter will not be present.<br>
+This is the same architecture used in [Lightstreamer - "Hello World" Tutorial - .NET Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-dotnet), but in this case the Remote Data Adapter is not a .NET application, but any process that opens two sockets with the Proxy Data Adapter and implements the ARI Protocol over TCP. As in the previous examples, we will not code a custom Metadata Adapter, but will use a default one. So the Remote Metadata Adapter will not be present.<br>
 
 Let's recap. On the server side, this new example will be comprised of:
 
@@ -28,6 +29,7 @@ So, what about the <b>Remote Data Adapter</b>? We could implement it in any lang
 Should be fun ...
 
 The Proxy Data Adapter listens on two TCP ports and the Remote Data Adapter has to create two sockets. One socket is used for interactions based on a <b>request/response</b> paradigm (this is a <i>synchronous channel</i>). The other socket is used to deliver <b>asynchronous events</b> from the Remote Adapter to the Proxy Adapter (this is an <i>asynchronous channel</i>). Therefore, our Remote Data Adapter will be comprised of two telnet windows.
+<!-- END DESCRIPTION lightstreamer-example-helloworld-adapter-socket -->
 
 ## Setting Up the System ##
 
@@ -59,7 +61,7 @@ We have chosen TCP port <b>7001</b> for the request/response channel and TCP por
 
 Notice the "<b>timeout</b>" parameter. It sets the maximum time the Proxy Adapter will wait for a response from the Remote Adapter after issuing a request. The default value is 10 seconds, but in this case the Remote Adapter is played by humans, so I have configured a very high value (10 hours), to do relaxed experiments without the pressure of any timeouts.
 
-Finally, let's deploy the simple Web resources. Create a "<b>HelloWorldSockets</b>" folder under the "Lightstreamer/pages" folder. Put in this new folder the "index.htm" file available from this project (the page is very similar to those of two previous articles; we just changed the Adapter name to "PROXY_HELLOWORLD_SOCKETS" and added the .setRequestedSnapshot("yes") line to always get the current state of the fields). Now we have to deploy the JavaSscript libraries used by our page. Let's create an "LS" folder under "HelloWorldSockets" and copy to it all the files located in "Lightstreamer/DOCS-SDKs/sdk_client_web/lib". For further details on the page deployment, please see [this project](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript).
+Finally, let's deploy the simple Web resources. Create a "<b>HelloWorldSockets</b>" folder under the "Lightstreamer/pages" folder. Put in this new folder the "index.htm" file available from this project (the page is very similar to those of two previous articles; we just changed the Adapter name to "PROXY_HELLOWORLD_SOCKETS" and added the .setRequestedSnapshot("yes") line to always get the current state of the fields). Now we have to deploy the JavaSscript libraries used by our page. Let's create an "LS" folder under "HelloWorldSockets" and copy to it all the files located in "Lightstreamer/DOCS-SDKs/sdk_client_web/lib". For further details on the page deployment, please see [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript).
 
 ## Let's Play ##
 
@@ -199,12 +201,16 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 ## Clients using this Adapter ##
 
-* ["Hello World" with Lightstreamer Colosseo](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript)
+<!-- START RELATED_ENTRIES -->
+
+* [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript)
+
+<!-- END RELATED_ENTRIES -->
 
 ## Related projects ##
 
-* [Lightstreamer "Hello World" Adapter for Java](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-java)
-* [Lightstreamer "Hello World" Adapter for .NET](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-dotnet)
+* [Lightstreamer - "Hello World" Tutorial - Java Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-java)
+* [Lightstreamer - "Hello World" Tutorial - .NET Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-dotnet)
 
 # Lightstreamer Compatibility Notes #
 
