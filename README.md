@@ -67,7 +67,7 @@ Start Lightstreamer Server from a command or shell window (I will call this the 
 
 ```cmd
 [...]
-30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.2 a4 build 1648
+30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 6.0 a1 build 1650
 30.ott.13 17:07:22,286 < INFO> Lightstreamer Server starting in Moderato edition.
 30.ott.13 17:07:22,346 < WARN> Only minimal JMX management support is available with the current license.
 30.ott.13 17:07:22,444 < INFO> Started RMI server for JMX on port 8888.
@@ -112,7 +112,7 @@ The Server initialization will complete and in the log window you should see som
 
 ```cmd
 [...]
-30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.2 a4 build 1648
+30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 6.0 a1 build 1650
 30.ott.13 17:07:22,286 < INFO> Lightstreamer Server starting in Moderato edition.
 30.ott.13 17:07:22,346 < WARN> Only minimal JMX management support is available with the current license.
 30.ott.13 17:07:22,444 < INFO> Started RMI server for JMX on port 8888.
@@ -138,7 +138,7 @@ The Server initialization will complete and in the log window you should see som
 30.ott.13 17:08:02,765 < INFO> Reply receiver '#1' starting...
 30.ott.13 17:08:02,779 < INFO> Pump pool size set by default at 8.
 30.ott.13 17:08:02,795 < INFO> Lightstreamer on Java Virtual Machine: Sun Microsystems Inc., Java HotSpot(TM) 64-Bit Server VM, 20.5-b03, 1.6.0_30-b12 on Windows 7
-30.ott.13 17:08:02,796 < INFO> Lightstreamer Server 5.2 a4 build 1648 starting...
+30.ott.13 17:08:02,796 < INFO> Lightstreamer Server 6.0 a1 build 1650 starting...
 30.ott.13 17:08:02,811 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ...
 .
 ```
