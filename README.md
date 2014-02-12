@@ -35,7 +35,7 @@ The Proxy Data Adapter listens on two TCP ports and the Remote Data Adapter has 
 
 If you didn't already do it in the previous installments, download and install the [latest release of Lightstreamer Moderato](http://www.lightstreamer.com/download).
 
-Now, let's deploy the Adapter pair (Proxy Data Adapter + LiteralBasedProvider) in a new folder. Go to the "adapters" folder of your Lightstreamer Server installation. You could already have a "StockList" folder (containing a pre-installed demo Adapter), plus a "HelloWorld" and a "ProxyHelloWorld" folders (if you followed the previous two articles). In any case, you don't need these three folders, as we are going to create a new one for this example.  Let's call this new folder (created inside "adapters") "<b>ProxyHelloWorldSockets</b>". Then create a "strong>lib" folder inside "ProxyHelloWorldSockets" and copy the "<b>ls-proxy-adapters.jar</b>" file from "Lightstreamer/DOCS-SDKs/sdk_adapter_remoting_infrastructure/lib" to "Lightstreamer/adapters/ProxyHelloWorldSockets/lib".
+Now, let's deploy the Adapter pair (Proxy Data Adapter + [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java)) in a new folder. Go to the "adapters" folder of your Lightstreamer Server installation. You could already have a "StockList" folder (containing a pre-installed demo Adapter), plus a "HelloWorld" and a "ProxyHelloWorld" folders (if you followed the previous two articles). In any case, you don't need these three folders, as we are going to create a new one for this example.  Let's call this new folder (created inside "adapters") "<b>ProxyHelloWorldSockets</b>". Then create a "strong>lib" folder inside "ProxyHelloWorldSockets" and copy the "<b>ls-proxy-adapters.jar</b>" file from "Lightstreamer/DOCS-SDKs/sdk_adapter_remoting_infrastructure/lib" to "Lightstreamer/adapters/ProxyHelloWorldSockets/lib".
 
 Create a new file in "Lightstreamer/adapters/ProxyHelloWorldSockets", call it "adapters.xml", and use the following contents:
 
@@ -199,6 +199,7 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 * [Lightstreamer - "Hello World" Tutorial - Java Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-java)
 * [Lightstreamer - "Hello World" Tutorial - .NET Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-dotnet)
+* [Lightstreamer - Reusable Metadata Adapters - Java Adapter](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java)
 
 # Lightstreamer Compatibility Notes #
 
