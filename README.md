@@ -203,5 +203,5 @@ Should you develop any Adapter in <b>PHP, Ruby, Python , Perl</b>, or any other 
 
 # Lightstreamer Compatibility Notes #
 
-- Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.4 or newer.
+- Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.4 and 1.5.
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
