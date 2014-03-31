@@ -49,6 +49,7 @@ Create a new file in "Lightstreamer/adapters/ProxyHelloWorldSockets", call it "a
  
   <data_provider>
     <adapter_class>com.lightstreamer.adapters.remote.data.NetworkedDataProvider</adapter_class>
+    <classloader>log-enabled</classloader>
       <param name="request_reply_port">7001</param>
       <param name="notify_port">7002</param>
       <param name="timeout">36000000</param>
