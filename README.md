@@ -82,6 +82,15 @@ If you want to install a version of this demo in your local Lightstreamer Server
 * Get the `deploy.zip` file for the Lightstreamer version you have installed from [releases](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-socket/releases) and unzip it, obtaining the `deployment` folder.
 * Plug the Proxy Data Adapter into the Server: go to the `deployment/Deployment_LS` folder and copy the `SocketHelloWorld` directory and all of its files to the `adapters` folder of your Lightstreamer Server installation.
 * Alternatively you may plug the *robust* versions of the Proxy Data Adapter: go to the `deployment/Deployment_LS(robust)` folder and copy the `SocketHelloWorld` directory and all of its files into `adapters` folder of your Lightstreamer Server installation. 
+* Install the client listed in [Clients Using This Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-node#clients-using-this-adapter).
+    * In order to make the ["Hello World" Tutorial - HTML Client](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript) front-end pages get data from the newly installed Adapter Set, you need to modify the front-end pages and set the required Adapter Set name to PROXY_HELLOWORLD_SOCKETS, when creating the LightstreamerClient instance. So edit the `index.htm` page of the Hello World front-end, deployed under `Lightstreamer/pages/HelloWorld`, and replace:<BR/>
+`var client = new LightstreamerClient(null," HELLOWORLD");`<BR/>
+with:<BR/>
+`var client = new LightstreamerClient(null,"PROXY_HELLOWORLD_SOCKETS");;`<BR/>
+Add the .setRequestedSnapshot("yes") line to always get the current state of the fields
+
+### Run the Demo
+
 * Launch Lightstreamer Server from a command or shell window (which we will call the *"log window"*). The Server will wait for the "PROXY_HELLOWORLD_SOCKETS" Remote Data Adapter to connect to the two TCP ports we specified above (7001 and 7002), and the Server startup will complete only after a successful connection between the Proxy Data Adapter and the Remote Data Adapter. You should see something like this:
 ```cmd
 [...]
@@ -142,29 +151,23 @@ The Server initialization will complete and in the log window you should see som
 30.ott.13 17:08:02,811 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ...
 .
 ```
-* Test the Adapter, launching the client listed in [Clients Using This Adapter](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-node#clients-using-this-adapter).
-    * In order to make the ["Hello World" Tutorial - HTML Client](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript) front-end pages get data from the newly installed Adapter Set, you need to modify the front-end pages and set the required Adapter Set name to PROXY_HELLOWORLD_SOCKETS, when creating the LightstreamerClient instance. So edit the `index.htm` page of the Hello World front-end, deployed under `Lightstreamer/pages/HelloWorld`, and replace:<BR/>
-`var client = new LightstreamerClient(null," HELLOWORLD");`<BR/>
-with:<BR/>
-`var client = new LightstreamerClient(null,"PROXY_HELLOWORLD_SOCKETS");;`<BR/>
-Add the .setRequestedSnapshot("yes") line to always get the current state of the fields
-    * Open a browser window and go to: [http://localhost:8080/HelloWorld/]()
+* Open a browser window and go to: [http://localhost:8080/HelloWorld/]()
 * In the *log window* you will see some information regarding the HTTP interaction between the browser and the Lightstreamer Server.
 * In the browser window you will see:
 ```cmd
     loading...
     loading...
 ```
-* The "<b>greetings</b>" item has been subscribed too by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
+* The `greetings` item has been subscribed too by the Client, with a schema comprised of the `message` and `timestamp` fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
 ```cmd
   10000011b6a823e31|SUB|S|greetings
 ```
-* The first string is the unique ID of that request and will change every time. Let's respond saying that we accept such subscription. We can do this by typing the following string in the <i>request/response window</i> and hitting Enter:
+* The first string is the unique ID of that request and will change every time. Let's respond saying that we accept such subscription. We can do this by typing the following string in the *request/response window* and hitting Enter:
 ```cmd
   10000011b6a823e31|SUB|V
 ```
 *Note: Replace "10000011b6a823e31" with the actual ID you received, otherwise the subscription will not succeed and you will see a warning in the log window.*
-* Our Remote Data Adapter has now accepted to serve events on the "greetings" item. It's time to inject some events by hand, through the async window. With most telnet applications you will not see anything will typing in the async window, so it is better to use copy and paste. Paste the following string, then hit Enter:
+* Our Remote Data Adapter has now accepted to serve events on the `greetings` item. It's time to inject some events by hand, through the async window. With most telnet applications you will not see anything will typing in the async window, so it is better to use copy and paste. Paste the following string, then hit Enter:
 ```cmd
   0|UD3|S|greetings|S|10000011b6a823e31|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
 ```
@@ -174,7 +177,7 @@ Add the .setRequestedSnapshot("yes") line to always get the current state of the
   Hello socket world!
   Now is the time
 ```
-* We can push more events on the "greetings" item, leveraging the same two fields ("message" and "timestamp") ans sending arbitrary data. For example, paste this in the async window (always on a single line and replacing the ID):
+* We can push more events on the `greetings` item, leveraging the same two fields `message` and `timestamp`, ans sending arbitrary data. For example, paste this in the async window (always on a single line and replacing the ID):
 ```cmd
   0|UD3|S|greetings|S|10000011b6a823e31|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
 ```
