@@ -82,7 +82,7 @@ If you want to install a version of this demo in your local Lightstreamer Server
 * Get the `deploy.zip` file for the Lightstreamer version you have installed from [releases](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-socket/releases) and unzip it, obtaining the `deployment` folder.
 * Plug the Proxy Data Adapter into the Server: go to the `deployment/Deployment_LS` folder and copy the `SocketHelloWorld` directory and all of its files to the `adapters` folder of your Lightstreamer Server installation.
 * Alternatively you may plug the *robust* versions of the Proxy Data Adapter: go to the `deployment/Deployment_LS(robust)` folder and copy the `SocketHelloWorld` directory and all of its files into `adapters` folder of your Lightstreamer Server installation. 
-* Launch Lightstreamer Server from a command or shell window (which we will call the *"log window"*). The Server startup will complete only after a successful connection between the Proxy Data Adapter and the Remote Data Adapter. You should see something like this:
+* Launch Lightstreamer Server from a command or shell window (which we will call the *"log window"*). The Server will wait for the "PROXY_HELLOWORLD_SOCKETS" Remote Data Adapter to connect to the two TCP ports we specified above (7001 and 7002), and the Server startup will complete only after a successful connection between the Proxy Data Adapter and the Remote Data Adapter. You should see something like this:
 ```cmd
 [...]
 30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 5.1.1 build 1623.2
@@ -101,7 +101,6 @@ If you want to install a version of this demo in your local Lightstreamer Server
 30.ott.13 17:07:22,741 < INFO> Waiting for a connection on port 7001...
 .
 ```
-The Server is waiting for the "PROXY_HELLOWORLD_SOCKETS" Remote Data Adapter to connect to the two TCP ports we specified above (7001 and 7002). The Server initialization will complete only when these connections succeed.
 * Open a command or a shell windows (which I will call the *"request/response window"*) and type :
 ```cmd
   telnet localhost 7001
@@ -156,7 +155,7 @@ Add the .setRequestedSnapshot("yes") line to always get the current state of the
 loading...
 loading...
 ```
-The "<b>greetings</b>" item has been subscribed too by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
+    * The "<b>greetings</b>" item has been subscribed too by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
 ```cmd
   10000011b6a823e31|SUB|S|greetings
 ```
@@ -169,7 +168,7 @@ The "<b>greetings</b>" item has been subscribed too by the Client, with a schema
 ```cmd
   0|UD3|S|greetings|S|10000011b6a823e31|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
 ```
-*Note: Make sure to paste everything on a single line (the text above was split on two lines to fit in the page). And again, replace "10000011b6a823e31" with the actual ID you received.*
+*Note: Again, replace "10000011b6a823e31" with the actual ID you received.*
     * Now look at the browser window and enjoy the results of this effort:
 ```cmd
   Hello socket world!
