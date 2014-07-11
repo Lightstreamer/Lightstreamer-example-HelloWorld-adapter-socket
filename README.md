@@ -162,7 +162,7 @@ The Server initialization will complete and in the log window you should see som
 ```cmd
   10000011b6a823e31|SUB|S|greetings
 ```
-* The first string "10000011b6a823e31" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.
+*Note: The first string "10000011b6a823e31" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
 * Let's respond saying that we accept such subscription. We can do this by typing the following string in the *request/response window* and hitting Enter:
 ```cmd
   10000011b6a823e31|SUB|V
