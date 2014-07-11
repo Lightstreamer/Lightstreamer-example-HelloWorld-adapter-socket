@@ -149,32 +149,32 @@ with:<BR/>
 `var client = new LightstreamerClient(null,"PROXY_HELLOWORLD_SOCKETS");;`<BR/>
 Add the .setRequestedSnapshot("yes") line to always get the current state of the fields
     * Open a browser window and go to: [http://localhost:8080/HelloWorld/]()
-    * In the *log window* you will see some information regarding the HTTP interaction between the browser and the Lightstreamer Server.
-    * In the browser window you will see:
+* In the *log window* you will see some information regarding the HTTP interaction between the browser and the Lightstreamer Server.
+* In the browser window you will see:
 ```cmd
-loading...
-loading...
+    loading...
+    loading...
 ```
-    * The "<b>greetings</b>" item has been subscribed too by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
+* The "<b>greetings</b>" item has been subscribed too by the Client, with a schema comprised of the "<b>message</b>" and "<b>timestamp</b>" fields. The Server has then subscribed to the same item through our Remote Adapter (due to the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the request/response window, similar to the following:
 ```cmd
   10000011b6a823e31|SUB|S|greetings
 ```
-    * The first string is the unique ID of that request and will change every time. Let's respond saying that we accept such subscription. We can do this by typing the following string in the <i>request/response window</i> and hitting Enter:
+* The first string is the unique ID of that request and will change every time. Let's respond saying that we accept such subscription. We can do this by typing the following string in the <i>request/response window</i> and hitting Enter:
 ```cmd
   10000011b6a823e31|SUB|V
 ```
 *Note: Replace "10000011b6a823e31" with the actual ID you received, otherwise the subscription will not succeed and you will see a warning in the log window.*
-    * Our Remote Data Adapter has now accepted to serve events on the "greetings" item. It's time to inject some events by hand, through the async window. With most telnet applications you will not see anything will typing in the async window, so it is better to use copy and paste. Paste the following string, then hit Enter:
+* Our Remote Data Adapter has now accepted to serve events on the "greetings" item. It's time to inject some events by hand, through the async window. With most telnet applications you will not see anything will typing in the async window, so it is better to use copy and paste. Paste the following string, then hit Enter:
 ```cmd
   0|UD3|S|greetings|S|10000011b6a823e31|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
 ```
 *Note: Again, replace "10000011b6a823e31" with the actual ID you received.*
-    * Now look at the browser window and enjoy the results of this effort:
+* Now look at the browser window and enjoy the results of this effort:
 ```cmd
   Hello socket world!
   Now is the time
 ```
-    * We can push more events on the "greetings" item, leveraging the same two fields ("message" and "timestamp") ans sending arbitrary data. For example, paste this in the async window (always on a single line and replacing the ID):
+* We can push more events on the "greetings" item, leveraging the same two fields ("message" and "timestamp") ans sending arbitrary data. For example, paste this in the async window (always on a single line and replacing the ID):
 ```cmd
   0|UD3|S|greetings|S|10000011b6a823e31|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
 ```
