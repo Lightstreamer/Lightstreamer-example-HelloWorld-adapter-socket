@@ -119,13 +119,12 @@ Add the .setRequestedSnapshot("yes") line to always get the current state of the
 ```cmd
   telnet localhost 7002
 ```
-
 Promptly, the Server will try to initialize our Remote Data Adapter; this will cause a request to be issued in the request/response window, similar to the following:
 ```cmd
   10000014209a460b9|DPI|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS
 ```
-
-*Note: The first string "10000014209a460b9" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
+*Note: The first string "10000014209a460b9" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message.*
+* Let's respond saying that we accept such subscription. We can do this by typing the following string in the request/response window and hitting Enter:
 ```cmd
   10000014209a460b9|DPI|V
 ```
@@ -161,8 +160,7 @@ The Server initialization will complete and in the log window you should see som
 30.ott.13 17:08:02,779 < INFO> Pump pool size set by default at 8.
 30.ott.13 17:08:02,795 < INFO> Lightstreamer on Java Virtual Machine: Sun Microsystems Inc., Java HotSpot(TM) 64-Bit Server VM, 20.5-b03, 1.6.0_30-b12 on Windows 7
 30.ott.13 17:08:02,796 < INFO> Lightstreamer Server 6.0 a1 build 1650 starting...
-30.ott.13 17:08:02,811 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ...
-.
+30.ott.13 17:08:02,811 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ....
 ```
 * Open a browser window and go to: [http://localhost:8080/HelloWorld/]()
 * In the *log window* you will see some information regarding the HTTP interaction between the browser and the Lightstreamer Server.
@@ -175,6 +173,7 @@ The Server initialization will complete and in the log window you should see som
 ```cmd
   20000014209a460b9|SUB|S|greetings
 ```
+*Note: The first string "20000014209a460b9" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
 * Let's respond saying that we accept such subscription. We can do this by typing the following string in the *request/response window* and hitting Enter:
 ```cmd
   20000014209a460b9|SUB|V
