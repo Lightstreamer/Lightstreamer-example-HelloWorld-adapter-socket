@@ -125,7 +125,7 @@ Promptly, the Server will try to initialize our Remote Data Adapter; this will c
   10000014209a460b9|DPI|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS
 ```
 
-*Note: The first string "10000011b6a823e31" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
+*Note: The first string "10000014209a460b9" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
 ```cmd
   10000014209a460b9|DPI|V
 ```
@@ -179,12 +179,12 @@ The Server initialization will complete and in the log window you should see som
 ```cmd
   20000014209a460b9|SUB|V
 ```
-*Note: Replace "10000011b6a823e31" with the actual ID you received.*
+*Note: Replace "10000014209a460b9" with the actual ID you received.*
 * Our Remote Data Adapter has now accepted to serve events on the `greetings` item. It's time to inject some events by hand, through the *async window*. With most telnet applications you will not see anything will typing in the *async window*, so it is better to use copy and paste. Paste the following string, then hit Enter:
 ```cmd
   0|UD3|S|greetings|S|20000014209a460b9|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
 ```
-*Note: Make sure to paste everything on a single line, and replace "10000011b6a823e31" with the actual ID you received.*
+*Note: Make sure to paste everything on a single line, and replace "10000014209a460b9" with the actual ID you received.*
 * Now look at the browser window and enjoy the results of this effort:
 ```cmd
   Hello socket world!
