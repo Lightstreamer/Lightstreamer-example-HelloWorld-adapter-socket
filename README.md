@@ -78,6 +78,8 @@ We have chosen TCP port <b>7001</b> for the request/response channel and TCP por
 
 Notice the `timeout` parameter. It sets the maximum time the Proxy Adapter will wait for a response from the Remote Adapter after issuing a request. The default value is 10 seconds, but in this case the Remote Adapter is played by humans, so we have configured a very high value (10 hours), to do relaxed experiments without the pressure of any timeouts.
 
+**NOTE: At this stage, the tutorial is based on a version of Lightstreamer Server that is currently available only as a prerelease. Skip the notes below and refer to the "for_Lightstreamer_5.1.2" tag for a tutorial version suitable for the current public version of Lightstreamer.**
+
 ## Install
 If you want to install a version of this demo in your local Lightstreamer Server, follow these steps.
 * Download *Lightstreamer Server* (Lightstreamer Server comes with a free non-expiring demo license for 20 connected users) from [Lightstreamer Download page](http://www.lightstreamer.com/download.htm), and install it, as explained in the `GETTING_STARTED.TXT` file in the installation home directory.
@@ -215,6 +217,7 @@ The Server initialization will complete and in the log window you should see som
 
 - Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.6 or newer.
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
+- For a version of this tutorial compatible with Lightstreamer Server version 5.1.2, please refer to [this tag](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-socket/releases/tag/v1.0.0).
 
 ## Final Notes
 For more information, please [visit our website](http://www.lightstreamer.com/) and [post to our support forums](http://forums.lightstreamer.com) any feedback or question you might have. Thanks!
