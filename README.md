@@ -213,8 +213,9 @@ The Server initialization will complete and in the log window, you should see so
 
 ## Lightstreamer Compatibility Notes
 
-- Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.6 or newer.
+- Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.6.
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
+- For a version of this example compatible with Adapter Remoting Infrastructure 1.4.3, please refer to [this tag](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-socket/tree/v1.0.0).
 
 ## Final Notes
 For more information, please [visit our website](http://www.lightstreamer.com/) and [post to our support forums](http://forums.lightstreamer.com) any feedback or questions you might have. Thanks!
