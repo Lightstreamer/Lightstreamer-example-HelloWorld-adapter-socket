@@ -18,7 +18,7 @@ As an example of [Clients Using This Adapter](https://github.com/Weswit/Lightstr
 
 On the client side, we will keep the same exact HTML front-end used in the two previous installments. For an explanation of the HTML/JavaScript code, please see the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Weswit/Lightstreamer-example-HelloWorld-client-javascript) project.
 
-On the *server side*, we will leverage the [Lightstreamer Adapter Remoting Infrastructure (ARI)](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/sdk_adapter_remoting_infrastructure/doc/ARI%20Protocol.pdf):
+On the *server side*, we will leverage the [Lightstreamer Adapter Remoting Infrastructure (ARI)](http://www.lightstreamer.com/docs/ARI_base/ARI%20Protocol.pdf):
 
 ![General architecture](general_architecture.png)
 
@@ -38,7 +38,7 @@ The Proxy Data Adapter listens on two TCP ports and the Remote Data Adapter has 
 
 ### The Network Protocol
 
-In the examples, we scratch the surface of the ARI Network Protocol. By delving into deeper details, you will see that it is quite straightforward. The full specification is available in the [ARI Protocol.pdf document](http://www.lightstreamer.com/latest/Lightstreamer_Allegro-Presto-Vivace_5_1_Colosseo/Lightstreamer/DOCS-SDKs/sdk_adapter_remoting_infrastructure/doc/ARI%20Protocol.pdf).
+In the examples, we scratch the surface of the ARI Network Protocol. By delving into deeper details, you will see that it is quite straightforward. The full specification is available in the [ARI Protocol.pdf document](http://www.lightstreamer.com/docs/ARI_base/ARI%20Protocol.pdf).
 
 The Remote Data Adapter can only receive two synchronous requests: `subscribe` and `unsubscribe`. It can send three asynchronous events: `update`, `end of snapshot`, and `failure`.
 The Remote Metadata Adapter (which is not covered in this article) can receive more synchronous requests, as its interface is a bit more complex than the Data Adapter, but it does not send any asynchronous events at all (in fact, it uses one TCP socket only).
@@ -52,8 +52,8 @@ Should you develop any Adapter in <b>PHP, Ruby, Python, Perl</b>, or any other l
 #### The Adapter Set Configuration
 
 This Adapter Set Name is configured and will be referenced by the clients as `PROXY_HELLOWORLD_SOCKETS`.
-For this demo, we configure just the Data Adapter as a *Proxy Data Adapter*, while instead, as Metadata Adapter, we use the ready-made [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java).
-As *Proxy Data Adapter*, you may configure also the robust versions. The *Robust Proxy Data Adapter* has some recovery capabilities and avoid to terminate the Lightstreamer Server process, so it can handle the case in which a Remote Data Adapter is missing or fails, by suspending the data flow and trying to connect to a new Remote Data Adapter instance. Full details on the recovery behavior of the Robust Data Adapter are available as inline comments within the `DOCS-SDKs/sdk_adapter_remoting_infrastructure/conf/sockets(robust)/adapters.xml` file in your Lightstreamer Server installation.
+For this demo, we configure just the Data Adapter as a *Proxy Data Adapter*, while instead, as Metadata Adapter, we use the [LiteralBasedProvider](https://github.com/Weswit/Lightstreamer-example-ReusableMetadata-adapter-java), a simple full implementation of a Metadata Adapter, already provided by Lightstreamer server.
+As *Proxy Data Adapter*, you may configure also the robust versions. The *Robust Proxy Data Adapter* has some recovery capabilities and avoid to terminate the Lightstreamer Server process, so it can handle the case in which a Remote Data Adapter is missing or fails, by suspending the data flow and trying to connect to a new Remote Data Adapter instance. Full details on the recovery behavior of the Robust Data Adapter are available as inline comments within the `DOCS-SDKs/adapter_remoting_infrastructure/doc/adapter_robust_conf_template/adapters.xml` file in your Lightstreamer Server installation.
 
 The `adapters.xml` file for this demo should look like:
 ```xml
@@ -65,7 +65,7 @@ The `adapters.xml` file for this demo should look like:
   </metadata_provider>
  
   <data_provider>
-    <adapter_class>com.lightstreamer.adapters.remote.data.NetworkedDataProvider</adapter_class>
+    <adapter_class>PROXY_FOR_REMOTE_ADAPTER</adapter_class>
     <classloader>log-enabled</classloader>
       <param name="request_reply_port">7001</param>
       <param name="notify_port">7002</param>
@@ -213,9 +213,9 @@ The Server initialization will complete and in the log window, you should see so
 
 ## Lightstreamer Compatibility Notes
 
-- Compatible with Lightstreamer Adapter Remoting Infrastructure (Proxy Adapters) version 1.6.
+- Compatible with Lightstreamer SDK for Generic Adapters version 1.7 or newer.
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
-- For a version of this example compatible with Adapter Remoting Infrastructure 1.4.3, please refer to [this tag](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-socket/tree/v1.0.0).
+- For a version of this example compatible with SDK for Generic Adapters 1.4.3, please refer to [this tag](https://github.com/Weswit/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_5.1).
 
 ## Final Notes
 For more information, please [visit our website](http://www.lightstreamer.com/) and [post to our support forums](http://forums.lightstreamer.com) any feedback or questions you might have. Thanks!
