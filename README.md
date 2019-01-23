@@ -216,7 +216,7 @@ The Server initialization will complete and in the log window, you should see so
 
 ## Lightstreamer Compatibility Notes
 
-- Compatible with Lightstreamer SDK for Generic Adapters version 1.7 or newer.
+- Compatible with Lightstreamer SDK for Generic Adapters version 1.7 to 1.8.0 (Corresponding to Adapter Remoting Infrastructure version 1.7 to 1.8).
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
 - For a version of this example compatible with SDK for Generic Adapters 1.4.3, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_5.1).
 
