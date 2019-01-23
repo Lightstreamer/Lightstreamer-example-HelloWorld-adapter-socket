@@ -18,7 +18,7 @@ As an example of [Clients Using This Adapter](https://github.com/Lightstreamer/L
 
 On the client side, we will keep the same exact HTML front-end used in the two previous installments. For an explanation of the HTML/JavaScript code, please see the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) project.
 
-On the *server side*, we will leverage the [Lightstreamer Adapter Remoting Infrastructure (ARI)](http://www.lightstreamer.com/docs/adapter_generic_base/ARI%20Protocol.pdf):
+On the *server side*, we will leverage the [Lightstreamer Adapter Remoting Infrastructure (ARI)](https://lightstreamer.com/latest/Lightstreamer_7_0/Lightstreamer/DOCS-SDKs/sdk_adapter_generic/doc/ARI%20Protocol.pdf):
 
 ![General architecture](general_architecture.png)
 
@@ -38,7 +38,7 @@ The Proxy Data Adapter listens on two TCP ports and the Remote Data Adapter has 
 
 ### The Network Protocol
 
-In the examples, we scratch the surface of the ARI Network Protocol. By delving into deeper details, you will see that it is quite straightforward. The full specification is available in the [ARI Protocol.pdf document](http://www.lightstreamer.com/docs/adapter_generic_base/ARI%20Protocol.pdf).
+In the examples, we scratch the surface of the ARI Network Protocol. By delving into deeper details, you will see that it is quite straightforward. The full specification is available in the [ARI Protocol.pdf document](https://lightstreamer.com/latest/Lightstreamer_7_0/Lightstreamer/DOCS-SDKs/sdk_adapter_generic/doc/ARI%20Protocol.pdf).
 
 The Remote Data Adapter can only receive two synchronous requests: `subscribe` and `unsubscribe`. It can send three asynchronous events: `update`, `end of snapshot`, and `failure`.
 The Remote Metadata Adapter (which is not covered in this article) can receive more synchronous requests, as its interface is a bit more complex than the Data Adapter, but it does not send any asynchronous events at all (in fact, it uses one TCP socket only).
