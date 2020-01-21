@@ -84,8 +84,8 @@ You can easily expand your configurations using the generic template, `DOCS-SDKs
 
 ## Install
 If you want to install a version of this demo in your local Lightstreamer Server, follow these steps:
-* Download *Lightstreamer Server 7.0* (Lightstreamer Server comes with a free non-expiring demo license for 20 connected users) from [Lightstreamer Download page](http://www.lightstreamer.com/download.htm), and install it, as explained in the `GETTING_STARTED.TXT` file in the installation home directory.
-* Get the `deploy.zip` file for the Lightstreamer version you have installed from [releases](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/releases) and unzip it, obtaining the `deployment` folder.
+* Download *Lightstreamer Server* (Lightstreamer Server comes with a free non-expiring demo license for 20 connected users) from [Lightstreamer Download page](http://www.lightstreamer.com/download.htm), and install it, as explained in the `GETTING_STARTED.TXT` file in the installation home directory.
+* Get the `deploy.zip` file of the [latest release](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/releases) and unzip it, obtaining the `deployment` folder.
 * Plug the Proxy Data Adapter into the Server: go to the `deployment/Deployment_LS` folder and copy the `SocketHelloWorld` directory and all of its files to the `adapters` folder of your Lightstreamer Server installation.
 * Alternatively, you may plug the *robust* versions of the Proxy Data Adapter: go to the `deployment/Deployment_LS(robust)` folder and copy the `SocketHelloWorld` directory and all of its files into `adapters` folder of your Lightstreamer Server installation. 
 * Install the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) listed in [Clients Using This Adapter](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-node#clients-using-this-adapter).
@@ -100,20 +100,20 @@ Add the .setRequestedSnapshot("yes") line to always get the current state of the
 * Launch Lightstreamer Server from a command or shell window (which we will call the *"log window"*). The Server will wait for the "PROXY_HELLOWORLD_SOCKETS" Remote Data Adapter to connect to the two TCP ports we specified above (7001 and 7002), and the Server startup will complete only after a successful connection between the Proxy Data Adapter and the Remote Data Adapter. You should see something like this:
 ```cmd
 [...]
-30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 6.0 a1 build 1650
-30.ott.13 17:07:22,286 < INFO> Lightstreamer Server starting in Moderato edition.
-30.ott.13 17:07:22,346 < WARN> Only minimal JMX management support is available with the current license.
-30.ott.13 17:07:22,444 < INFO> Started RMI server for JMX on port 8888.
-30.ott.13 17:07:22,525 < INFO> Bound RMI Connector for JMX on port 8888 (communication on port 8888).
-30.ott.13 17:07:22,568 < INFO> Bound RMI Connector for Platform mbeans on port 8888 (communication on port 8888).
-30.ott.13 17:07:22,574 < INFO> SERVER pool size set by default at 10.
-30.ott.13 17:07:22,696 < INFO> data_provider element without name attribute; using DEFAULT as the default name.
-30.ott.13 17:07:22,699 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
-30.ott.13 17:07:22,699 < INFO> Loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
-30.ott.13 17:07:22,706 < INFO> Finished loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
-30.ott.13 17:07:22,736 < INFO> Connecting...
-30.ott.13 17:07:22,740 < INFO> Waiting for a connection on port 7002...
-30.ott.13 17:07:22,741 < INFO> Waiting for a connection on port 7001...
+23-gen-19 15:52:17,241 < INFO> Lightstreamer Server 7.1.0 b4 build 1913
+23-gen-19 15:52:17,248 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 25.66-b18, 1.8.0_66-b18 on Windows 10
+23-gen-19 15:52:18,196 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
+23-gen-19 15:52:20,700 < INFO> Number of detected cores: 4
+23-gen-19 15:52:20,701 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
+23-gen-19 15:52:34,054 < INFO> Pump pool size set by default at 4.
+23-gen-19 15:52:35,004 < INFO> Events pool size set by default at 4.
+23-gen-19 15:52:35,076 < INFO> Snapshot pool size set by default at 10.
+23-gen-19 15:52:37,702 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+23-gen-19 15:52:37,703 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+23-gen-19 15:52:38,763 < INFO> Finished loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
+23-gen-19 15:52:39,704 < INFO> Connecting...
+23-gen-19 15:52:39,817 < INFO> Waiting for a connection on port 7002...
+23-gen-19 15:52:39,819 < INFO> Waiting for a connection on port 7001...
 .
 ```
 * Open a command or a shell windows (which I will call the *"request/response window"*) and type :
@@ -126,46 +126,47 @@ Add the .setRequestedSnapshot("yes") line to always get the current state of the
 ```
 Promptly, the Server will try to initialize our Remote Data Adapter; this will cause a request to be issued in the request/response window, similar to the following:
 ```cmd
-  10000014209a460b9|DPI|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS
+  10000014209a460b9|DPI|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS|S|ARI.version|S|1.8.2
 ```
 *Note: The first string "10000014209a460b9" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message.*
-* Let's respond saying that we accept such subscription. We can do this by typing the following string in the request/response window and hitting Enter:
+* Let's respond saying that we accept such initialization parameters. We can do this by typing the following string in the request/response window and hitting Enter:
 ```cmd
-  10000014209a460b9|DPI|V
+  10000014209a460b9|DPI|S|ARI.version|S|1.8.2
 ```
+where we have also agreed on version 1.8.2 of the protocol.
 *Note: Replace "10000014209a460b9" with the actual ID you received, otherwise the initialization will not succeed and you will see a warning in the log window.*
 
 The Server initialization will complete and in the log window, you should see something like this:
 ```cmd
 [...]
-30.ott.13 17:07:22,227 < INFO> Lightstreamer Server 6.0 a1 build 1650
-30.ott.13 17:07:22,286 < INFO> Lightstreamer Server starting in Moderato edition.
-30.ott.13 17:07:22,346 < WARN> Only minimal JMX management support is available with the current license.
-30.ott.13 17:07:22,444 < INFO> Started RMI server for JMX on port 8888.
-30.ott.13 17:07:22,525 < INFO> Bound RMI Connector for JMX on port 8888 (communication on port 8888).
-30.ott.13 17:07:22,568 < INFO> Bound RMI Connector for Platform mbeans on port 8888 (communication on port 8888).
-30.ott.13 17:07:22,574 < INFO> SERVER pool size set by default at 10.
-30.ott.13 17:07:22,696 < INFO> data_provider element without name attribute; using DEFAULT as the default name.
-30.ott.13 17:07:22,699 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
-30.ott.13 17:07:22,699 < INFO> Loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
-30.ott.13 17:07:22,706 < INFO> Finished loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
-30.ott.13 17:07:22,736 < INFO> Connecting...
-30.ott.13 17:07:22,740 < INFO> Waiting for a connection on port 7002...
-30.ott.13 17:07:22,741 < INFO> Waiting for a connection on port 7001...
-30.ott.13 17:07:47,368 < INFO> Connected on port 7001
-30.ott.13 17:08:02,448 < INFO> Connected on port 7002
-30.ott.13 17:08:02,450 < INFO> Connected
-30.ott.13 17:08:02,451 < INFO> Finished loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
-30.ott.13 17:08:02,465 < INFO> Selector pool size set by default at 8.
-30.ott.13 17:08:02,466 < INFO> Selector maximum load set by default at 1000.
-30.ott.13 17:08:02,758 < INFO> Notify receiver '#1' starting...
-30.ott.13 17:08:02,763 < INFO> Request sender '#1' starting...
-30.ott.13 17:08:02,764 < INFO> Events pool size set by default at 8.
-30.ott.13 17:08:02,765 < INFO> Reply receiver '#1' starting...
-30.ott.13 17:08:02,779 < INFO> Pump pool size set by default at 8.
-30.ott.13 17:08:02,795 < INFO> Lightstreamer on Java Virtual Machine: Sun Microsystems Inc., Java HotSpot(TM) 64-Bit Server VM, 20.5-b03, 1.6.0_30-b12 on Windows 7
-30.ott.13 17:08:02,796 < INFO> Lightstreamer Server 6.0 a1 build 1650 starting...
-30.ott.13 17:08:02,811 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ....
+23-gen-19 15:52:17,241 < INFO> Lightstreamer Server 7.1.0 b4 build 1913
+23-gen-19 15:52:17,248 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 25.66-b18, 1.8.0_66-b18 on Windows 10
+23-gen-19 15:52:18,196 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
+23-gen-19 15:52:20,700 < INFO> Number of detected cores: 4
+23-gen-19 15:52:20,701 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
+23-gen-19 15:52:21,054 < INFO> Pump pool size set by default at 4.
+23-gen-19 15:52:22,004 < INFO> Events pool size set by default at 4.
+23-gen-19 15:52:22,076 < INFO> Snapshot pool size set by default at 10.
+23-gen-19 15:52:22,702 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+23-gen-19 15:52:22,703 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+23-gen-19 15:52:22,763 < INFO> Finished loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
+23-gen-19 15:52:23,704 < INFO> Connecting...
+23-gen-19 15:52:23,817 < INFO> Waiting for a connection on port 7002...
+23-gen-19 15:52:23,819 < INFO> Waiting for a connection on port 7001...
+23-gen-19 15:52:25,957 < INFO> Connected on port 7001 from /127.0.0.1:50405
+23-gen-19 15:52:26,618 < INFO> Connected on port 7002 from /127.0.0.1:50406
+23-gen-19 15:52:26,620 < INFO> Connected
+23-gen-19 15:52:26,823 < INFO> Request sender 'DEMO.QUOTE_ADAPTER' starting...
+23-gen-19 15:52:26,865 < INFO> Reply receiver 'DEMO.QUOTE_ADAPTER' starting...
+23-gen-19 15:52:26,939 < INFO> Notify receiver 'DEMO.QUOTE_ADAPTER' starting...
+23-gen-19 15:52:26,987 < INFO> Finished loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+23-gen-19 15:52:27,145 < INFO> Selector maximum load set by default at 0.
+23-gen-19 15:52:27,285 < INFO> Created selector thread: NIO WRITE SELECTOR 1.
+23-gen-19 15:52:27,323 < INFO> Created selector thread: NIO READ SELECTOR 1.
+23-gen-19 15:52:27,327 < INFO> Created selector thread: NIO CHECK SELECTOR 1.
+23-gen-19 15:52:27,406 < INFO> Lightstreamer Server initialized.
+23-gen-19 15:52:27,407 < INFO> Lightstreamer Server 7.1.0 b4 build 1913 starting...
+23-gen-19 15:52:28,078 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ....
 ```
 * Open a browser window and go to: [http://localhost:8080/HelloWorld/]()
 * In the *log window*, you will see some information regarding the HTTP interaction between the browser and the Lightstreamer Server.
@@ -199,6 +200,59 @@ The Server initialization will complete and in the log window, you should see so
   0|UD3|S|greetings|S|20000014209a460b9|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
 ```
 
+### Available improvements
+
+#### Add Encryption
+
+Each TCP connection from a Remote Adapter can be encrypted via TLS. To have the Proxy Data Adapter accept only TLS connections, a suitable configuration should be added in adapters.xml in the <data_provider> block, like this:
+```xml
+  <data_provider>
+    ...
+    <param name="tls">Y</param>
+    <param name="tls.keystore.type">JKS</param>
+    <param name="tls.keystore.keystore_file">./myserver.keystore</param>
+    <param name="tls.keystore.keystore_password.type">text</param>
+    <param name="tls.keystore.keystore_password">xxxxxxxxxx</param>
+    ...
+  </data_provider>
+```
+This requires that a suitable keystore with a valid certificate is provided. See the configuration details in `DOCS-SDKs/adapter_remoting_infrastructure/doc/adapter_conf_template/adapters.xml`.
+NOTE: For your experiments, you can configure the adapters.xml to use the same JKS keystore "myserver.keystore" provided out of the box in the Lightstreamer distribution. Since this keystore contains an invalid certificate, remember to configure your local environment to "trust" it.
+The same settings will apply to both connections: "request/response" and "asynchronous".
+The above example can be easily ported to the new configuration. You will just need to use a tool that supports TLS connections instead of telnet. For instance you can use openssl with the "s_client" command. Note that the same hostname supported by the provided certificate must be used for the connection.
+
+The same settings are available for the Remote Metadata Adapter case.
+
+#### Add Authentication
+
+Each TCP connection from a Remote Adapter can be subject to Remote Adapter authentication through the submission of user/password credentials. To enforce credential check on the Proxy Data Adapter, a suitable configuration should be added in adapters.xml in the <data_provider> block, like this:
+```xml
+  <data_provider>
+    ...
+    <param name="auth">Y</param>
+    <param name="auth.credentials.1.user">user1</param>
+    <param name="auth.credentials.1.password">pwd1</param>
+    ...
+  </data_provider>
+```
+See the configuration details in `DOCS-SDKs/adapter_remoting_infrastructure/doc/adapter_conf_template/adapters.xml`.
+The same settings will apply to both connections: "request/response" and "asynchronous".
+The above example can be easily extended to the new configuration. There are only two differences:
+
+* The response to the initialization request received in the request/response window should be like this:
+```cmd
+  10000014209a460b9|DPI|S|ARI.version|S|1.8.2|S|user|S|user1|S|password|S|pwd1
+```
+*Note: Replace "10000014209a460b9" with the actual ID you received, otherwise the initialization will not succeed and you will see a warning in the log window.*
+* At the same time, a new message should be issued on the asynchronous window, that should be like this:
+```cmd
+  0|DPNI|S|ARI.version|S|1.8.2|S|user|S|user1|S|password|S|pwd1
+```
+
+The same settings are available for the Remote Metadata Adapter case.
+
+Authentication can (and should) be combined with TLS encryption.
+
 ## See Also
 
 ### Clients Using This Adapter
@@ -216,8 +270,9 @@ The Server initialization will complete and in the log window, you should see so
 
 ## Lightstreamer Compatibility Notes
 
-- Compatible with Lightstreamer SDK for Generic Adapters version 1.7 to 1.8.0 (Corresponding to Adapter Remoting Infrastructure version 1.7 to 1.8).
+- Compatible with Lightstreamer SDK for Generic Adapters version 1.8.2 or newer (Corresponding to Adapter Remoting Infrastructure version 1.9 or newer).
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
+- For a version of this example compatible with SDK for Generic Adapters 1.7 to 1.8.0, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_7_0).
 - For a version of this example compatible with SDK for Generic Adapters 1.4.3, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_5.1).
 
 ## Final Notes
