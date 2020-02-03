@@ -88,12 +88,13 @@ If you want to install a version of this demo in your local Lightstreamer Server
 * Get the `deploy.zip` file of the [latest release](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/releases) and unzip it, obtaining the `deployment` folder.
 * Plug the Proxy Data Adapter into the Server: go to the `deployment/Deployment_LS` folder and copy the `SocketHelloWorld` directory and all of its files to the `adapters` folder of your Lightstreamer Server installation.
 * Alternatively, you may plug the *robust* versions of the Proxy Data Adapter: go to the `deployment/Deployment_LS(robust)` folder and copy the `SocketHelloWorld` directory and all of its files into `adapters` folder of your Lightstreamer Server installation. 
-* Install the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) listed in [Clients Using This Adapter](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-node#clients-using-this-adapter).
+* Install the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) listed in [Clients Using This Adapter](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket#clients-using-this-adapter).
     * To make the ["Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) front-end pages get data from the newly installed Adapter Set, you need to modify the front-end pages and set the required Adapter Set name to PROXY_HELLOWORLD_SOCKETS, when creating the LightstreamerClient instance. So edit the `index.htm` page of the Hello World front-end, deployed under `Lightstreamer/pages/HelloWorld`, and replace:<BR/>
 `var client = new LightstreamerClient(null," HELLOWORLD");`<BR/>
 with:<BR/>
 `var client = new LightstreamerClient(null,"PROXY_HELLOWORLD_SOCKETS");;`<BR/>
-Add the .setRequestedSnapshot("yes") line to always get the current state of the fields
+Also add the .setRequestedSnapshot("yes") line to always get the current state of the fields. The result is shown in the sample file for Web Client Library 8.0.0.
+
 
 ### Run the Demo
 
