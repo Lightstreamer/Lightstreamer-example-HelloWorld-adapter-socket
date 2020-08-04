@@ -80,7 +80,8 @@ We have chosen TCP port <b>7001</b> for the request/response channel and TCP por
 Notice the `timeout` parameter. It sets the maximum time the Proxy Adapter will wait for a response from the Remote Adapter after issuing a request. The default value is 10 seconds, but in this case, the Remote Adapter is played by humans, so we have configured a very high value (10 hours), to do relaxed experiments without the pressure of any timeouts.
 
 <i>NOTE: not all configuration options of a Proxy Adapter are exposed by the file suggested above.<br>
-You can easily expand your configurations using the generic template, `DOCS-SDKs/adapter_remoting_infrastructure/doc/adapter_conf_template/adapters.xml` or `DOCS-SDKs/adapter_remoting_infrastructure/doc/adapter_robust_conf_template/adapters.xml`, as a reference.</i>
+You can easily expand your configurations using the generic template
+for [basic](https://lightstreamer.com/docs/ls-ARI/latest/adapter_conf_template/adapters.xml) and [robust](https://lightstreamer.com/docs/ls-ARI/latest/adapter_robust_conf_template/adapters.xml) Proxy Adapters as a reference.</i>
 
 ## Install
 If you want to install a version of this demo in your local Lightstreamer Server, follow these steps:
