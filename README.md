@@ -272,7 +272,7 @@ Authentication can (and should) be combined with TLS encryption.
 
 ## Lightstreamer Compatibility Notes
 
-- Compatible with Lightstreamer SDK for Generic Adapters version 1.8.2 or newer (Corresponding to Adapter Remoting Infrastructure version 1.9 or newer).
+- Compatible with Lightstreamer SDK for Generic Adapters version 1.8.2 or newer (Corresponding to Server version 7.1 or newer).
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
 - For a version of this example compatible with SDK for Generic Adapters 1.7 to 1.8.0, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_7_0).
 - For a version of this example compatible with SDK for Generic Adapters 1.4.3, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_5.1).
