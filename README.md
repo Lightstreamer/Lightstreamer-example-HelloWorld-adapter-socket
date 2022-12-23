@@ -251,15 +251,17 @@ See the configuration details in the [provided template](https://lightstreamer.c
 The same settings will apply to both connections: "request/response" and "asynchronous".
 The above example can be easily extended to the new configuration. There are only two differences:
 
-* The response to the initialization request received in the request/response window should be like this:
+* After connecting, no initialization request will be received in the "request/response" window. The Proxy Adapter will wait for the credentials first.*
+* Hence, as the first thing, a message should be issued on the "request/response" window, that should be like this:
 ```cmd
-  10000014209a460b9|DPI|S|ARI.version|S|1.8.2|S|user|S|user1|S|password|S|pwd1
+  1|RAC|S|user|S|user1|S|password|S|pwd1
 ```
-*Note: Replace "10000014209a460b9" with the actual ID you received, otherwise the initialization will not succeed and you will see a warning in the log window.*
-* At the same time, a new message should be issued on the asynchronous window, that should be like this:
+* and the same should be done on the "asynchronous" window.*
+* The message syntax here is slightly different but very similar; actually, for this test, you can send exactly the same message:*
 ```cmd
-  0|DPNI|S|ARI.version|S|1.8.2|S|user|S|user1|S|password|S|pwd1
+  1|RAC|S|user|S|user1|S|password|S|pwd1
 ```
+* After that, the initialization request will be received in the "request/response" window, and the interaction can go on as shown above.*
 
 The same settings are available for the Remote Metadata Adapter case.
 
