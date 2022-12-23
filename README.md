@@ -41,12 +41,12 @@ The Proxy Data Adapter listens on two TCP ports and the Remote Data Adapter has 
 In the examples, we scratch the surface of the ARI Network Protocol. By delving into deeper details, you will see that it is quite straightforward. The full specification is available in the [ARI Protocol.pdf document](https://lightstreamer.com/api/ls-generic-adapter/latest/ARI%20Protocol.pdf).
 
 The Remote Data Adapter can only receive two synchronous requests: `subscribe` and `unsubscribe`. It can send three asynchronous events: `update`, `end of snapshot`, and `failure`.
-The Remote Metadata Adapter (which is not covered in this article) can receive more synchronous requests, as its interface is a bit more complex than the Data Adapter, but it does not send any asynchronous events at all (in fact, it uses one TCP socket only).
+The Remote Metadata Adapter (which is not covered in this article) can receive more synchronous requests and also send a few asynchronous "backward" requests, as its interface is a bit more complex than the Data Adapter. But, actually, it uses one TCP socket only.
 
 In reality, of course, you will never implement a "human-driven" Adapter as we did in this article, but this approach is useful, from a didactive perspective, to illustrate the basic principles of the Lightstreamer Adapter Remoting Infrastructure (ARI). 
-If you need to develop an Adapter based on technologies other than Java, .NET, and Node.js [for which a higher level interface is available](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket#related-projects) the ARI makes the trick.
+If you need to develop an Adapter based on technologies other than Java, .NET, Node.js, and Python [for which a higher level interface is available](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket#related-projects) the ARI makes the trick.
 
-Should you develop any Adapter in <b>PHP, Ruby, Python, Perl</b>, or any other language, feel free to let us know, by posting a comment here on the [Lightstreamer Forums](http://forums.lightstreamer.com/).
+Should you develop any Adapter in <b>PHP, Ruby, Perl</b>, or any other language, feel free to let us know, by posting a comment here on the [Lightstreamer Forums](http://forums.lightstreamer.com/).
 
 ### Dig the Code
 
@@ -91,7 +91,7 @@ If you want to install a version of this demo in your local Lightstreamer Server
 * Alternatively, you may plug the *robust* versions of the Proxy Data Adapter: go to the `deployment/Deployment_LS(robust)` folder and copy the `SocketHelloWorld` directory and all of its files into `adapters` folder of your Lightstreamer Server installation. 
 * Install the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) listed in [Clients Using This Adapter](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket#clients-using-this-adapter).
     * To make the ["Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) front-end pages get data from the newly installed Adapter Set, you need to modify the front-end pages and set the required Adapter Set name to PROXY_HELLOWORLD_SOCKETS, when creating the LightstreamerClient instance. So edit the `index.htm` page of the Hello World front-end, deployed under `Lightstreamer/pages/HelloWorld`, and replace:<BR/>
-`var client = new LightstreamerClient(null," HELLOWORLD");`<BR/>
+`var client = new LightstreamerClient(null,"HELLOWORLD");`<BR/>
 with:<BR/>
 `var client = new LightstreamerClient(null,"PROXY_HELLOWORLD_SOCKETS");;`<BR/>
 Also add the .setRequestedSnapshot("yes") line to always get the current state of the fields. The result is shown in the sample file for Web Client Library 8.0.0.
@@ -102,20 +102,23 @@ Also add the .setRequestedSnapshot("yes") line to always get the current state o
 * Launch Lightstreamer Server from a command or shell window (which we will call the *"log window"*). The Server will wait for the "PROXY_HELLOWORLD_SOCKETS" Remote Data Adapter to connect to the two TCP ports we specified above (7001 and 7002), and the Server startup will complete only after a successful connection between the Proxy Data Adapter and the Remote Data Adapter. You should see something like this:
 ```cmd
 [...]
-23-gen-19 15:52:17,241 < INFO> Lightstreamer Server 7.1.0 b4 build 1913
-23-gen-19 15:52:17,248 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 25.66-b18, 1.8.0_66-b18 on Windows 10
-23-gen-19 15:52:18,196 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
-23-gen-19 15:52:20,700 < INFO> Number of detected cores: 4
-23-gen-19 15:52:20,701 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
-23-gen-19 15:52:34,054 < INFO> Pump pool size set by default at 4.
-23-gen-19 15:52:35,004 < INFO> Events pool size set by default at 4.
-23-gen-19 15:52:35,076 < INFO> Snapshot pool size set by default at 10.
-23-gen-19 15:52:37,702 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
-23-gen-19 15:52:37,703 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
-23-gen-19 15:52:38,763 < INFO> Finished loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
-23-gen-19 15:52:39,704 < INFO> Connecting...
-23-gen-19 15:52:39,817 < INFO> Waiting for a connection on port 7002...
-23-gen-19 15:52:39,819 < INFO> Waiting for a connection on port 7001...
+23.dic.22 12:33:47,887 < INFO> Lightstreamer Server 7.3.2 build 3049
+23.dic.22 12:33:47,887 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39, 17.0.1+12-LTS-39 on Windows 10
+23.dic.22 12:33:47,887 < INFO> Server starting for TLCP version 2.4.0
+23.dic.22 12:33:47,934 < INFO> License correctly bound with the following parameter(s):
+[...]
+23.dic.22 12:33:47,934 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
+23.dic.22 12:33:47,981 < INFO> Number of detected cores: 8
+23.dic.22 12:33:47,981 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
+[...]
+23.dic.22 12:33:48,240 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+23.dic.22 12:33:48,243 < INFO> Finished loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+23.dic.22 12:33:48,244 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+23.dic.22 12:33:48,253 < INFO> Proxy Data Adapter starting
+23.dic.22 12:33:48,254 < INFO> Proxy Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT starting for ARI protocol version 1.9.0
+23.dic.22 12:33:48,257 < INFO> Connecting...
+23.dic.22 12:33:48,258 < INFO> Waiting for a connection on port 7001...
+23.dic.22 12:33:48,258 < INFO> Waiting for a connection on port 7002...
 .
 ```
 * Open a command or a shell windows (which I will call the *"request/response window"*) and type :
@@ -128,47 +131,54 @@ Also add the .setRequestedSnapshot("yes") line to always get the current state o
 ```
 Promptly, the Server will try to initialize our Remote Data Adapter; this will cause a request to be issued in the request/response window, similar to the following:
 ```cmd
-  10000014209a460b9|DPI|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS|S|ARI.version|S|1.8.2
+  1000001853ec66d38|DPI|S|ARI.version|S|1.9.0|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS
 ```
-*Note: The first string "10000014209a460b9" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message.*
+*Note: The first string "1000001853ec66d38" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message.*
 * Let's respond saying that we accept such initialization parameters. We can do this by typing the following string in the request/response window and hitting Enter:
 ```cmd
-  10000014209a460b9|DPI|S|ARI.version|S|1.8.2
+  1000001853ec66d38|DPI|S|ARI.version|S|1.9.0
 ```
-where we have also agreed on version 1.8.2 of the protocol.
-*Note: Replace "10000014209a460b9" with the actual ID you received, otherwise the initialization will not succeed and you will see a warning in the log window.*
+where we have also agreed on version 1.9.0 of the protocol.
+*Note: Replace "1000001853ec66d38" with the actual ID you received, otherwise the initialization will not succeed and you will see a warning in the log window.*
 
 The Server initialization will complete and in the log window, you should see something like this:
 ```cmd
 [...]
-23-gen-19 15:52:17,241 < INFO> Lightstreamer Server 7.1.0 b4 build 1913
-23-gen-19 15:52:17,248 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 25.66-b18, 1.8.0_66-b18 on Windows 10
-23-gen-19 15:52:18,196 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
-23-gen-19 15:52:20,700 < INFO> Number of detected cores: 4
-23-gen-19 15:52:20,701 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
-23-gen-19 15:52:21,054 < INFO> Pump pool size set by default at 4.
-23-gen-19 15:52:22,004 < INFO> Events pool size set by default at 4.
-23-gen-19 15:52:22,076 < INFO> Snapshot pool size set by default at 10.
-23-gen-19 15:52:22,702 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
-23-gen-19 15:52:22,703 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
-23-gen-19 15:52:22,763 < INFO> Finished loading Metadata Adapter PROXY_HELLOWORLD_SOCKETS
-23-gen-19 15:52:23,704 < INFO> Connecting...
-23-gen-19 15:52:23,817 < INFO> Waiting for a connection on port 7002...
-23-gen-19 15:52:23,819 < INFO> Waiting for a connection on port 7001...
-23-gen-19 15:52:25,957 < INFO> Connected on port 7001 from /127.0.0.1:50405
-23-gen-19 15:52:26,618 < INFO> Connected on port 7002 from /127.0.0.1:50406
-23-gen-19 15:52:26,620 < INFO> Connected
-23-gen-19 15:52:26,823 < INFO> Request sender 'DEMO.QUOTE_ADAPTER' starting...
-23-gen-19 15:52:26,865 < INFO> Reply receiver 'DEMO.QUOTE_ADAPTER' starting...
-23-gen-19 15:52:26,939 < INFO> Notify receiver 'DEMO.QUOTE_ADAPTER' starting...
-23-gen-19 15:52:26,987 < INFO> Finished loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
-23-gen-19 15:52:27,145 < INFO> Selector maximum load set by default at 0.
-23-gen-19 15:52:27,285 < INFO> Created selector thread: NIO WRITE SELECTOR 1.
-23-gen-19 15:52:27,323 < INFO> Created selector thread: NIO READ SELECTOR 1.
-23-gen-19 15:52:27,327 < INFO> Created selector thread: NIO CHECK SELECTOR 1.
-23-gen-19 15:52:27,406 < INFO> Lightstreamer Server initialized.
-23-gen-19 15:52:27,407 < INFO> Lightstreamer Server 7.1.0 b4 build 1913 starting...
-23-gen-19 15:52:28,078 < INFO> Server "Lightstreamer HTTP Server" listening to *:8080 ....
+23.dic.22 12:33:47,887 < INFO> Lightstreamer Server 7.3.2 build 3049
+23.dic.22 12:33:47,887 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39, 17.0.1+12-LTS-39 on Windows 10
+23.dic.22 12:33:47,887 < INFO> Server starting for TLCP version 2.4.0
+23.dic.22 12:33:47,934 < INFO> License correctly bound with the following parameter(s):
+[...]
+23.dic.22 12:33:47,934 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
+23.dic.22 12:33:47,981 < INFO> Number of detected cores: 8
+23.dic.22 12:33:47,981 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
+[...]
+23.dic.22 12:33:48,240 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+23.dic.22 12:33:48,243 < INFO> Finished loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+23.dic.22 12:33:48,244 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+23.dic.22 12:33:48,253 < INFO> Proxy Data Adapter starting
+23.dic.22 12:33:48,254 < INFO> Proxy Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT starting for ARI protocol version 1.9.0
+23.dic.22 12:33:48,257 < INFO> Connecting...
+23.dic.22 12:33:48,258 < INFO> Waiting for a connection on port 7001...
+23.dic.22 12:33:48,258 < INFO> Waiting for a connection on port 7002...
+23.dic.22 12:37:49,621 < INFO> Accepted connection (1) on the Request/Reply socket on port 7001 from /0:0:0:0:0:0:0:1:56769
+23.dic.22 12:37:49,627 < INFO> Request sender 'PROXY_HELLOWORLD_SOCKETS.DEFAULT-1' starting...
+23.dic.22 12:37:49,628 < INFO> Reply Receiver 'PROXY_HELLOWORLD_SOCKETS.DEFAULT-1' starting...
+23.dic.22 12:37:49,629 < INFO> Connected (1)  on port 7001 from /0:0:0:0:0:0:0:1:56769
+23.dic.22 12:37:49,630 < INFO> Stopped waiting on port 7001
+23.dic.22 12:38:19,651 < INFO> Accepted connection (1) on the Notify socket on port 7002 from /0:0:0:0:0:0:0:1:56772
+23.dic.22 12:38:19,652 < INFO> Notify Receiver 'PROXY_HELLOWORLD_SOCKETS.DEFAULT-1' starting...
+23.dic.22 12:38:19,655 < INFO> Connected (1)  on port 7002 from /0:0:0:0:0:0:0:1:56772
+23.dic.22 12:38:19,655 < INFO> Stopped waiting on port 7002
+23.dic.22 12:38:19,655 < INFO> Stopped waiting on port 7002
+23.dic.22 12:38:19,656 < INFO> Connected
+23.dic.22 12:40:29,252 < INFO> Received Remote Server protocol version as 1.9.0: accepted.
+23.dic.22 12:40:29,253 < INFO> Proxy Data Adapter started with protocol version 1.9.0
+23.dic.22 12:40:29,253 < INFO> Finished loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+[...]
+23.dic.22 12:40:29,418 < INFO> Lightstreamer Server initialized.
+23.dic.22 12:40:29,419 < INFO> Lightstreamer Server 7.3.2 build 3049 starting...
+23.dic.22 12:40:29,435 < INFO> Server 'Lightstreamer HTTP Server' listening to *:8080 ...
 ```
 * Open a browser window and go to: [http://localhost:8080/HelloWorld/]()
 * In the *log window*, you will see some information regarding the HTTP interaction between the browser and the Lightstreamer Server.
@@ -177,29 +187,29 @@ The Server initialization will complete and in the log window, you should see so
     loading...
     loading...
 ```
-* The `greetings` item has been subscribed too by the Client, with a schema comprised of the `message` and `timestamp` fields. The Server has then subscribed to the same item through our Remote Adapter (because of the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the *request/response window*, similar to the following:
+* The `greetings` item has been subscribed to by the Client, with a schema comprised of the `message` and `timestamp` fields. The Server has then subscribed to the same item through our Remote Adapter (because of the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the *request/response window*, similar to the following:
 ```cmd
-  20000014209a460b9|SUB|S|greetings
+  2000001853ec66d38|SUB|S|greetings
 ```
-*Note: The first string "20000014209a460b9" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
+*Note: The first string "2000001853ec66d38" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
 * Let's respond saying that we accept such subscription. We can do this by typing the following string in the *request/response window* and hitting Enter:
 ```cmd
-  20000014209a460b9|SUB|V
+  2000001853ec66d38|SUB|V
 ```
-*Note: Replace "20000014209a460b9" with the actual ID you received.*
+*Note: Replace "2000001853ec66d38" with the actual ID you received.*
 * Our Remote Data Adapter has now accepted to serve events on the `greetings` item. It's time to inject some events by hand, through the *async window*. With most telnet applications, you will not see anything when typing in the *async window*, so it is better to use copy and paste. Paste the following string, then hit Enter:
 ```cmd
-  0|UD3|S|greetings|S|20000014209a460b9|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
+  0|UD3|S|greetings|S|2000001853ec66d38|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
 ```
-*Note: Make sure to paste everything on a single line, and replace "20000014209a460b9" with the actual ID you received.*
+*Note: Make sure to paste everything on a single line, and replace "2000001853ec66d38" with the actual ID you received.*
 * Now look at the browser window and enjoy the results of this effort:
 ```cmd
   Hello socket world!
   Now is the time
 ```
-* We can push more events on the `greetings` item, leveraging the same two fields `message` and `timestamp`, ans sending arbitrary data. For example, paste this in the *async window* (always on a single line and replacing the ID):
+* We can push more events on the `greetings` item, leveraging the same two fields `message` and `timestamp`, and sending arbitrary data. For example, paste this in the *async window* (always on a single line and replacing the ID):
 ```cmd
-  0|UD3|S|greetings|S|20000014209a460b9|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
+  0|UD3|S|greetings|S|2000001853ec66d38|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
 ```
 
 ### Available improvements
