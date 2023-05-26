@@ -33,7 +33,7 @@ Let's recap. On the server side, this new example will be comprised of:
 So, what about the *Remote Data Adapter*? We could implement it in any language that supports socket programming, but in this article, we will do something more interactive, which does not require any programming. We will use a very normal telnet client to connect to the Proxy Data Adapter and will manually play the ARI Network Protocol.
 Should be fun...
 
-The Proxy Data Adapter listens on two TCP ports and the Remote Data Adapter has to create two sockets. One socket is used for interactions based on a **request/response** paradigm (this is a *synchronous channel*). The other socket is used to deliver **asynchronous events** from the Remote Adapter to the Proxy Adapter (this is an *asynchronous channel*). Therefore, our Remote Data Adapter will be comprised of two telnet windows.
+The Proxy Data Adapter listens on two TCP ports (at least, this is mandatory for Servers earlier than 7.4, then it is supported for backward compatibility). Hence, the Remote Data Adapter has to create two sockets. One socket is used for interactions based on a **request/response** paradigm (this is a *synchronous channel*). The other socket is used to deliver **asynchronous events** from the Remote Adapter to the Proxy Adapter (this is an *asynchronous channel*). Therefore, our Remote Data Adapter will be comprised of two telnet windows.
 <!-- END DESCRIPTION lightstreamer-example-helloworld-adapter-socket -->
 
 ### The Network Protocol
