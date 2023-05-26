@@ -10,7 +10,7 @@ In this third installment, we'll show a *Data Adapter* that communicates with th
 
 The rationale for this is to enable the development of Data Adapters based on technologies other than Java and .NET. This way, it is possible to inject real-time updates into Lightstreamer Server from programs written in <b>C, PHP, Ruby,</b> or any other language that allows client <b>TCP socket programming</b>.
 
-As an example of [Clients Using This Adapter](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket#clients-using-this-adapter), you may refer to the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) and view the corresponding [Live Demo](http://demos.lightstreamer.com/HelloWorld/).
+As an example of [Clients Using This Adapter](#clients-using-this-adapter), you may refer to the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) and view the corresponding [Live Demo](http://demos.lightstreamer.com/HelloWorld/).
 
 ## Details
 
@@ -44,7 +44,7 @@ The Remote Data Adapter can only receive two synchronous requests: `subscribe` a
 The Remote Metadata Adapter (which is not covered in this article) can receive more synchronous requests and also send a few asynchronous "backward" requests, as its interface is a bit more complex than the Data Adapter. But, actually, it uses one TCP socket only.
 
 In reality, of course, you will never implement a "human-driven" Adapter as we did in this article, but this approach is useful, from a didactive perspective, to illustrate the basic principles of the Lightstreamer Adapter Remoting Infrastructure (ARI). 
-If you need to develop an Adapter based on technologies other than Java, .NET, Node.js, and Python [for which a higher level interface is available](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket#related-projects) the ARI makes the trick.
+If you need to develop an Adapter based on technologies other than Java, .NET, Node.js, and Python [for which a higher level interface is available](#related-projects) the ARI makes the trick.
 
 Should you develop any Adapter in <b>PHP, Ruby, Perl</b>, or any other language, feel free to let us know, by posting a comment here on the [Lightstreamer Forums](http://forums.lightstreamer.com/).
 
@@ -54,7 +54,7 @@ Should you develop any Adapter in <b>PHP, Ruby, Perl</b>, or any other language,
 
 This Adapter Set Name is configured and will be referenced by the clients as `PROXY_HELLOWORLD_SOCKETS`.
 For this demo, we configure just the Data Adapter as a *Proxy Data Adapter*, while instead, as Metadata Adapter, we use the [LiteralBasedProvider](https://github.com/Lightstreamer/Lightstreamer-example-ReusableMetadata-adapter-java), a simple full implementation of a Metadata Adapter, already provided by Lightstreamer server.
-As *Proxy Data Adapter*, you may configure also the robust versions. The *Robust Proxy Data Adapter* has some recovery capabilities and avoid to terminate the Lightstreamer Server process, so it can handle the case in which a Remote Data Adapter is missing or fails, by suspending the data flow and trying to connect to a new Remote Data Adapter instance. Full details on the recovery behavior of the Robust Data Adapter are available as inline comments within the [provided template](https://lightstreamer.com/docs/ls-ARI/latest/adapter_robust_conf_template/adapters.xml).
+As *Proxy Data Adapter*, you may configure also the robust versions. The *Robust Proxy Data Adapter* has some recovery capabilities and avoid to terminate the Lightstreamer Server process, so it can handle the case in which a Remote Data Adapter is missing or fails, by suspending the data flow and trying to connect to a new Remote Data Adapter instance. Full details on the recovery behavior of the Robust Data Adapter are available as inline comments within the [provided template](https://lightstreamer.com/docs/ls-server/latest_7_3/remote_adapter_robust_conf_template/adapters.xml).
 
 The `adapters.xml` file for this demo should look like:
 ```xml
@@ -81,15 +81,15 @@ Notice the `timeout` parameter. It sets the maximum time the Proxy Adapter will 
 
 <i>NOTE: not all configuration options of a Proxy Adapter are exposed by the file suggested above.<br>
 You can easily expand your configurations using the generic template
-for [basic](https://lightstreamer.com/docs/ls-ARI/latest/adapter_conf_template/adapters.xml) and [robust](https://lightstreamer.com/docs/ls-ARI/latest/adapter_robust_conf_template/adapters.xml) Proxy Adapters as a reference.</i>
+for [basic](https://lightstreamer.com/docs/ls-server/latest_7_3/remote_adapter_conf_template/adapters.xml) and [robust](https://lightstreamer.com/docs/ls-server/latest_7_3/remote_adapter_robust_conf_template/adapters.xml) Proxy Adapters as a reference.</i>
 
 ## Install
 If you want to install a version of this demo in your local Lightstreamer Server, follow these steps:
 * Download *Lightstreamer Server* (Lightstreamer Server comes with a free non-expiring demo license for 20 connected users) from [Lightstreamer Download page](http://www.lightstreamer.com/download.htm), and install it, as explained in the `GETTING_STARTED.TXT` file in the installation home directory.
-* Get the `deploy.zip` file of the [latest release](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/releases) and unzip it, obtaining the `deployment` folder.
+* Get the `deploy.zip` file of the ["Release for Lightstreamer 7.3" release](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/releases) and unzip it, obtaining the `deployment` folder.
 * Plug the Proxy Data Adapter into the Server: go to the `deployment/Deployment_LS` folder and copy the `SocketHelloWorld` directory and all of its files to the `adapters` folder of your Lightstreamer Server installation.
 * Alternatively, you may plug the *robust* versions of the Proxy Data Adapter: go to the `deployment/Deployment_LS(robust)` folder and copy the `SocketHelloWorld` directory and all of its files into `adapters` folder of your Lightstreamer Server installation. 
-* Install the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) listed in [Clients Using This Adapter](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket#clients-using-this-adapter).
+* Install the [Lightstreamer - "Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) listed in [Clients Using This Adapter](#clients-using-this-adapter).
     * To make the ["Hello World" Tutorial - HTML Client](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-client-javascript) front-end pages get data from the newly installed Adapter Set, you need to modify the front-end pages and set the required Adapter Set name to PROXY_HELLOWORLD_SOCKETS, when creating the LightstreamerClient instance. So edit the `index.htm` page of the Hello World front-end, deployed under `Lightstreamer/pages/HelloWorld`, and replace:<BR/>
 `var client = new LightstreamerClient(null,"HELLOWORLD");`<BR/>
 with:<BR/>
@@ -227,7 +227,7 @@ Each TCP connection from a Remote Adapter can be encrypted via TLS. To have the 
     ...
   </data_provider>
 ```
-This requires that a suitable keystore with a valid certificate is provided. See the configuration details in the [provided template](https://lightstreamer.com/docs/ls-ARI/latest/adapter_conf_template/adapters.xml).
+This requires that a suitable keystore with a valid certificate is provided. See the configuration details in the [provided template](https://lightstreamer.com/docs/ls-server/latest_7_3/remote_adapter_conf_template/adapters.xml).
 NOTE: For your experiments, you can configure the adapters.xml to use the same JKS keystore "myserver.keystore" provided out of the box in the Lightstreamer distribution. Since this keystore contains an invalid certificate, remember to configure your local environment to "trust" it.
 The same settings will apply to both connections: "request/response" and "asynchronous".
 The above example can be easily ported to the new configuration. You will just need to use a tool that supports TLS connections instead of telnet. For instance you can use openssl with the "s_client" command. Note that the same hostname supported by the provided certificate must be used for the connection.
@@ -246,7 +246,7 @@ Each TCP connection from a Remote Adapter can be subject to Remote Adapter authe
     ...
   </data_provider>
 ```
-See the configuration details in the [provided template](https://lightstreamer.com/docs/ls-ARI/latest/adapter_conf_template/adapters.xml)
+See the configuration details in the [provided template](https://lightstreamer.com/docs/ls-server/latest_7_3/remote_adapter_conf_template/adapters.xml)
 The same settings will apply to both connections: "request/response" and "asynchronous".
 The above example can be easily extended to the new configuration. There are only two differences:
 
