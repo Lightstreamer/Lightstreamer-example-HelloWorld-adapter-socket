@@ -22,7 +22,7 @@ On the *server side*, we will leverage the [Lightstreamer Adapter Remoting Infra
 
 ![General architecture](general_architecture.png)
 
-This is the same architecture used in [Lightstreamer - "Hello World" Tutorial - .NET Adapter](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-dotnet), but in this case, the Remote Data Adapter is not a .NET application, but any process that opens two sockets with the Proxy Data Adapter and implements the ARI Protocol over TCP. As in the previous examples, we will not code a custom Metadata Adapter, but will use a default one. So the Remote Metadata Adapter will not be present.
+This is the same architecture used in [Lightstreamer - "Hello World" Tutorial - .NET Adapter](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-dotnet), but in this case, the Remote Data Adapter is not a .NET application, but any process that open a socket with the Proxy Data Adapter and implements the ARI Protocol over TCP. As in the previous examples, we will not code a custom Metadata Adapter, but will use a default one. So the Remote Metadata Adapter will not be present.
 
 Let's recap. On the server side, this new example will be comprised of:
 
@@ -33,15 +33,15 @@ Let's recap. On the server side, this new example will be comprised of:
 So, what about the *Remote Data Adapter*? We could implement it in any language that supports socket programming, but in this article, we will do something more interactive, which does not require any programming. We will use a very normal telnet client to connect to the Proxy Data Adapter and will manually play the ARI Network Protocol.
 Should be fun...
 
-The Proxy Data Adapter listens on two TCP ports and the Remote Data Adapter has to create two sockets. One socket is used for interactions based on a **request/response** paradigm (this is a *synchronous channel*). The other socket is used to deliver **asynchronous events** from the Remote Adapter to the Proxy Adapter (this is an *asynchronous channel*). Therefore, our Remote Data Adapter will be comprised of two telnet windows.
+The Proxy Data Adapter listens on a TCP port and the Remote Data Adapter has to create a socket. This socket will carry two kinds of interactions: one based on a **request/response** paradigm (this is a *synchronous channel*). and the other based on **asynchronous events** from the Remote Adapter to the Proxy Adapter (this is an *asynchronous channel*). Therefore, our Remote Data Adapter will consist of a telnet window.
 <!-- END DESCRIPTION lightstreamer-example-helloworld-adapter-socket -->
 
 ### The Network Protocol
 
 In the examples, we scratch the surface of the ARI Network Protocol. By delving into deeper details, you will see that it is quite straightforward. The full specification is available in the [ARI Protocol.pdf document](https://lightstreamer.com/api/ls-generic-adapter/latest/ARI%20Protocol.pdf).
 
-The Remote Data Adapter can only receive two synchronous requests: `subscribe` and `unsubscribe`. It can send three asynchronous events: `update`, `end of snapshot`, and `failure`.
-The Remote Metadata Adapter (which is not covered in this article) can receive more synchronous requests and also send a few asynchronous "backward" requests, as its interface is a bit more complex than the Data Adapter. But, actually, it uses one TCP socket only.
+The Remote Data Adapter can only receive two synchronous requests: `subscribe` and `unsubscribe`. It can send several asynchronous events, among which: `update`, `end of snapshot`, `failure`.
+The Remote Metadata Adapter (which is not covered in this article) can receive more synchronous requests and also send a few asynchronous "backward" requests, as its interface is a bit more complex than the Data Adapter.
 
 In reality, of course, you will never implement a "human-driven" Adapter as we did in this article, but this approach is useful, from a didactive perspective, to illustrate the basic principles of the Lightstreamer Adapter Remoting Infrastructure (ARI). 
 If you need to develop an Adapter based on technologies other than Java, .NET, Node.js, and Python [for which a higher level interface is available](#related-projects) the ARI makes the trick.
@@ -69,13 +69,12 @@ The `adapters.xml` file for this demo should look like:
     <adapter_class>PROXY_FOR_REMOTE_ADAPTER</adapter_class>
     <classloader>log-enabled</classloader>
       <param name="request_reply_port">7001</param>
-      <param name="notify_port">7002</param>
       <param name="timeout">36000000</param>
   </data_provider>
  
 </adapters_conf>
 ```
-We have chosen TCP port <b>7001</b> for the request/response channel and TCP port <b>7002</b> for the asynchronous channel. Feel free to use different ports if such numbers are already used on your system.
+We have chosen TCP port <b>7001</b> for the connection. The connection will carry both the synchronous "requests/replies" channel and the asynchronous "notifications" channel. Feel free to use a different port if this number is already used on your system.
 
 Notice the `timeout` parameter. It sets the maximum time the Proxy Adapter will wait for a response from the Remote Adapter after issuing a request. The default value is 10 seconds, but in this case, the Remote Adapter is played by humans, so we have configured a very high value (10 hours), to do relaxed experiments without the pressure of any timeouts.
 
@@ -99,85 +98,74 @@ Also add the .setRequestedSnapshot("yes") line to always get the current state o
 
 ### Run the Demo
 
-* Launch Lightstreamer Server from a command or shell window (which we will call the *"log window"*). The Server will wait for the "PROXY_HELLOWORLD_SOCKETS" Remote Data Adapter to connect to the two TCP ports we specified above (7001 and 7002), and the Server startup will complete only after a successful connection between the Proxy Data Adapter and the Remote Data Adapter. You should see something like this:
+* Launch Lightstreamer Server from a command or shell window (which we will call the *"log window"*). The Server will wait for the "PROXY_HELLOWORLD_SOCKETS" Remote Data Adapter to connect to the TCP port (7001), and the Server startup will complete only after a successful connection between the Proxy Data Adapter and the Remote Data Adapter. You should see something like this:
     ```cmd
     [...]
-    23.dic.22 12:33:47,887 < INFO> Lightstreamer Server 7.3.2 build 3049
-    23.dic.22 12:33:47,887 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39, 17.0.1+12-LTS-39 on Windows 10
-    23.dic.22 12:33:47,887 < INFO> Server starting for TLCP version 2.4.0
-    23.dic.22 12:33:47,934 < INFO> License correctly bound with the following parameter(s):
+    23.dic.22 16:22:01,850 < INFO> Lightstreamer Server 7.4.0 a1 build 3127
+    23.dic.22 16:22:01,857 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 25.351-b10, 1.8.0_351-b10 on Windows 11
+    23.dic.22 16:22:01,861 < INFO> Server starting for TLCP version 2.4.0
+    23.dic.22 16:22:02,053 < INFO> License correctly bound with the following parameter(s):
     [...]
-    23.dic.22 12:33:47,934 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
-    23.dic.22 12:33:47,981 < INFO> Number of detected cores: 8
-    23.dic.22 12:33:47,981 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
+    23.dic.22 16:22:02,055 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
+    23.dic.22 16:22:02,325 < INFO> Number of detected cores: 8
+    23.dic.22 16:22:02,326 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
     [...]
-    23.dic.22 12:33:48,240 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
-    23.dic.22 12:33:48,243 < INFO> Finished loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
-    23.dic.22 12:33:48,244 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
-    23.dic.22 12:33:48,253 < INFO> Proxy Data Adapter starting
-    23.dic.22 12:33:48,254 < INFO> Proxy Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT starting for ARI protocol version 1.9.0
-    23.dic.22 12:33:48,257 < INFO> Connecting...
-    23.dic.22 12:33:48,258 < INFO> Waiting for a connection on port 7001...
-    23.dic.22 12:33:48,258 < INFO> Waiting for a connection on port 7002...
+    23.dic.22 16:22:02,608 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+    23.dic.22 16:22:02,614 < INFO> Finished loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+    23.dic.22 16:22:02,615 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+    23.dic.22 16:22:02,628 < INFO> Proxy Data Adapter starting
+    23.dic.22 16:22:02,629 < INFO> Proxy Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT starting for ARI protocol version 1.9.1
+    23.dic.22 16:22:02,635 < INFO> Connecting...
+    23.dic.22 16:22:02,637 < INFO> Waiting for a connection on port 7001...
     ```
-* Open a command or a shell windows (which I will call the *"request/response window"*) and type :
+* Open a command or a shell windows (which we will call the *"telnet window"*) and type :
     ```cmd
     telnet localhost 7001
     ```
-* Open a command or a shell windows (which I will call the *"async window"*) and type:
+    Promptly, the Server will try to initialize our Remote Data Adapter; this will cause a request to be issued in the telnet window, similar to the following:
     ```cmd
-    telnet localhost 7002
+    1000001853f9ac178|DPI|S|ARI.version|S|1.9.1|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS
     ```
-    Promptly, the Server will try to initialize our Remote Data Adapter; this will cause a request to be issued in the request/response window, similar to the following:
+    *Note: The first string "1000001853f9ac178" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message.*
+* Let's respond saying that we accept such initialization parameters. We can do this by typing the following string in the telnet window and hitting Enter:
     ```cmd
-    1000001853ec66d38|DPI|S|ARI.version|S|1.9.0|S|data_provider.name|S|DEFAULT|S|adapters_conf.id|S|PROXY_HELLOWORLD_SOCKETS
+    1000001853f9ac178|DPI|S|ARI.version|S|1.9.1
     ```
-    *Note: The first string "1000001853ec66d38" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message.*
-* Let's respond saying that we accept such initialization parameters. We can do this by typing the following string in the request/response window and hitting Enter:
-    ```cmd
-    1000001853ec66d38|DPI|S|ARI.version|S|1.9.0
-    ```
-    where we have also agreed on version 1.9.0 of the protocol.
-    *Note: Replace "1000001853ec66d38" with the actual ID you received, otherwise the initialization will not succeed and you will see a warning in the log window.*
+    where we have also agreed on version 1.9.1 of the protocol.
+    *Note: Replace "1000001853f9ac178" with the actual ID you received, otherwise the initialization will not succeed and you will see a warning in the log window.*
 
     The Server initialization will complete and in the log window, you should see something like this:
     ```cmd
     [...]
-    23.dic.22 12:33:47,887 < INFO> Lightstreamer Server 7.3.2 build 3049
-    23.dic.22 12:33:47,887 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 17.0.1+12-LTS-39, 17.0.1+12-LTS-39 on Windows 10
-    23.dic.22 12:33:47,887 < INFO> Server starting for TLCP version 2.4.0
-    23.dic.22 12:33:47,934 < INFO> License correctly bound with the following parameter(s):
+    23.dic.22 16:22:01,850 < INFO> Lightstreamer Server 7.4.0 a1 build 3127
+    23.dic.22 16:22:01,857 < INFO> Server launched on Java Virtual Machine: Oracle Corporation, Java HotSpot(TM) 64-Bit Server VM, 25.351-b10, 1.8.0_351-b10 on Windows 11
+    23.dic.22 16:22:01,861 < INFO> Server starting for TLCP version 2.4.0
+    23.dic.22 16:22:02,053 < INFO> License correctly bound with the following parameter(s):
     [...]
-    23.dic.22 12:33:47,934 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
-    23.dic.22 12:33:47,981 < INFO> Number of detected cores: 8
-    23.dic.22 12:33:47,981 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
+    23.dic.22 16:22:02,055 < WARN> Lightstreamer Server is running with a Demo license, which has a limit of 20 concurrent users and can be used for evaluation, development, and testing, but not for production. If you need to evaluate Lightstreamer Server without this user limit, or need any information on the other license types, please contact info@lightstreamer.com
+    23.dic.22 16:22:02,325 < INFO> Number of detected cores: 8
+    23.dic.22 16:22:02,326 < INFO> Lightstreamer Server starting in ENTERPRISE edition.
     [...]
-    23.dic.22 12:33:48,240 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
-    23.dic.22 12:33:48,243 < INFO> Finished loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
-    23.dic.22 12:33:48,244 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
-    23.dic.22 12:33:48,253 < INFO> Proxy Data Adapter starting
-    23.dic.22 12:33:48,254 < INFO> Proxy Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT starting for ARI protocol version 1.9.0
-    23.dic.22 12:33:48,257 < INFO> Connecting...
-    23.dic.22 12:33:48,258 < INFO> Waiting for a connection on port 7001...
-    23.dic.22 12:33:48,258 < INFO> Waiting for a connection on port 7002...
-    23.dic.22 12:37:49,621 < INFO> Accepted connection (1) on the Request/Reply socket on port 7001 from /0:0:0:0:0:0:0:1:56769
-    23.dic.22 12:37:49,627 < INFO> Request sender 'PROXY_HELLOWORLD_SOCKETS.DEFAULT-1' starting...
-    23.dic.22 12:37:49,628 < INFO> Reply Receiver 'PROXY_HELLOWORLD_SOCKETS.DEFAULT-1' starting...
-    23.dic.22 12:37:49,629 < INFO> Connected (1)  on port 7001 from /0:0:0:0:0:0:0:1:56769
-    23.dic.22 12:37:49,630 < INFO> Stopped waiting on port 7001
-    23.dic.22 12:38:19,651 < INFO> Accepted connection (1) on the Notify socket on port 7002 from /0:0:0:0:0:0:0:1:56772
-    23.dic.22 12:38:19,652 < INFO> Notify Receiver 'PROXY_HELLOWORLD_SOCKETS.DEFAULT-1' starting...
-    23.dic.22 12:38:19,655 < INFO> Connected (1)  on port 7002 from /0:0:0:0:0:0:0:1:56772
-    23.dic.22 12:38:19,655 < INFO> Stopped waiting on port 7002
-    23.dic.22 12:38:19,655 < INFO> Stopped waiting on port 7002
-    23.dic.22 12:38:19,656 < INFO> Connected
-    23.dic.22 12:40:29,252 < INFO> Received Remote Server protocol version as 1.9.0: accepted.
-    23.dic.22 12:40:29,253 < INFO> Proxy Data Adapter started with protocol version 1.9.0
-    23.dic.22 12:40:29,253 < INFO> Finished loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+    23.dic.22 16:22:02,608 < INFO> Loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+    23.dic.22 16:22:02,614 < INFO> Finished loading Metadata Adapter for Adapter Set PROXY_HELLOWORLD_SOCKETS
+    23.dic.22 16:22:02,615 < INFO> Loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
+    23.dic.22 16:22:02,628 < INFO> Proxy Data Adapter starting
+    23.dic.22 16:22:02,629 < INFO> Proxy Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT starting for ARI protocol version 1.9.1
+    23.dic.22 16:22:02,635 < INFO> Connecting...
+    23.dic.22 16:22:02,637 < INFO> Waiting for a connection on port 7001...
+    23.dic.22 16:29:44,811 < INFO> Accepted connection (1) on the Request/Reply socket on port 7001 from /172.19.184.62:47874
+    23.dic.22 16:29:44,836 < INFO> Request sender 'PROXY_HELLOWORLD_SOCKETS.DEFAULT-1' starting...
+    23.dic.22 16:29:44,836 < INFO> Reply&Notify Receiver 'PROXY_HELLOWORLD_SOCKETS.DEFAULT-1' starting...
+    23.dic.22 16:29:44,840 < INFO> Connected (1)  on port 7001 from /172.19.184.62:47874
+    23.dic.22 16:29:44,840 < INFO> Stopped waiting on port 7001
+    23.dic.22 16:29:44,840 < INFO> Connected
+    23.dic.22 16:30:46,855 < INFO> Received Remote Server protocol version as 1.9.1: accepted.
+    23.dic.22 16:30:46,855 < INFO> Proxy Data Adapter started with protocol version 1.9.1
+    23.dic.22 16:30:46,855 < INFO> Finished loading Data Adapter PROXY_HELLOWORLD_SOCKETS.DEFAULT
     [...]
-    23.dic.22 12:40:29,418 < INFO> Lightstreamer Server initialized.
-    23.dic.22 12:40:29,419 < INFO> Lightstreamer Server 7.3.2 build 3049 starting...
-    23.dic.22 12:40:29,435 < INFO> Server 'Lightstreamer HTTP Server' listening to *:8080 ...
+    23.dic.22 16:30:47,022 < INFO> Lightstreamer Server initialized.
+    23.dic.22 16:30:47,022 < INFO> Lightstreamer Server 7.4.0 a1 build 3127 starting...
+    23.dic.22 16:30:47,046 < INFO> Server 'Lightstreamer HTTP Server' listening to *:8080 ...
     ```
 * Open a browser window and go to: [http://localhost:8080/HelloWorld/]()
 * In the *log window*, you will see some information regarding the HTTP interaction between the browser and the Lightstreamer Server.
@@ -186,29 +174,29 @@ Also add the .setRequestedSnapshot("yes") line to always get the current state o
     loading...
     loading...
     ```
-* The `greetings` item has been subscribed to by the Client, with a schema comprised of the `message` and `timestamp` fields. The Server has then subscribed to the same item through our Remote Adapter (because of the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the *request/response window*, similar to the following:
+* The `greetings` item has been subscribed to by the Client, with a schema comprised of the `message` and `timestamp` fields. The Server has then subscribed to the same item through our Remote Adapter (because of the fact that Lightstreamer Server is based on a "Publish On-Demand" paradigm). This subscription will manifest itself as a request in the *telnet window*, similar to the following:
     ```cmd
-    2000001853ec66d38|SUB|S|greetings
+    2000001853f9ac178|SUB|S|greetings
     ```
-    *Note: The first string "2000001853ec66d38" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
-* Let's respond saying that we accept such subscription. We can do this by typing the following string in the *request/response window* and hitting Enter:
+    *Note: The first string "2000001853f9ac178" is the unique ID of that request and will actually change every time. We will use the actual ID we received for the reply message and the messages to be published.*
+* Let's respond saying that we accept such subscription. We can do this by typing the following string in the *telnet window* and hitting Enter:
     ```cmd
-    2000001853ec66d38|SUB|V
+    2000001853f9ac178|SUB|V
     ```
-    *Note: Replace "2000001853ec66d38" with the actual ID you received.*
-* Our Remote Data Adapter has now accepted to serve events on the `greetings` item. It's time to inject some events by hand, through the *async window*. With most telnet applications, you will not see anything when typing in the *async window*, so it is better to use copy and paste. Paste the following string, then hit Enter:
+    *Note: Replace "2000001853f9ac178" with the actual ID you received.*
+* Our Remote Data Adapter has now accepted to serve events on the `greetings` item. It's time to inject some events by hand, through the *telnet window*. With most telnet applications, you will not see anything when typing in the *telnet window*, so it is better to use copy and paste. Paste the following string, then hit Enter:
     ```cmd
-    0|UD3|S|greetings|S|2000001853ec66d38|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
+    0|UD3|S|greetings|S|2000001853f9ac178|B|0|S|timestamp|S|Now is the time|S|message|S|Hello socket world!
     ```
-    *Note: Make sure to paste everything on a single line, and replace "2000001853ec66d38" with the actual ID you received.*
+    *Note: Make sure to paste everything on a single line, and replace "2000001853f9ac178" with the actual ID you received.*
 * Now look at the browser window and enjoy the results of this effort:
     ```cmd
     Hello socket world!
     Now is the time
     ```
-* We can push more events on the `greetings` item, leveraging the same two fields `message` and `timestamp`, and sending arbitrary data. For example, paste this in the *async window* (always on a single line and replacing the ID):
+* We can push more events on the `greetings` item, leveraging the same two fields `message` and `timestamp`, and sending arbitrary data. For example, paste this in the *telnet window* (always on a single line and replacing the ID):
     ```cmd
-    0|UD3|S|greetings|S|2000001853ec66d38|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
+    0|UD3|S|greetings|S|2000001853f9ac178|B|0|S|message|S|What do you call a fish with no eyes?|S|timestamp|S|A fsh
     ```
 
 ### Available improvements
@@ -229,7 +217,6 @@ Each TCP connection from a Remote Adapter can be encrypted via TLS. To have the 
 ```
 This requires that a suitable keystore with a valid certificate is provided. See the configuration details in the [provided template](https://lightstreamer.com/docs/ls-server/latest/remote_adapter_conf_template/adapters.xml).
 NOTE: For your experiments, you can configure the adapters.xml to use the same JKS keystore "myserver.keystore" provided out of the box in the Lightstreamer distribution. Since this keystore contains an invalid certificate, remember to configure your local environment to "trust" it.
-The same settings will apply to both connections: "request/response" and "asynchronous".
 The above example can be easily ported to the new configuration. You will just need to use a tool that supports TLS connections instead of telnet. For instance you can use openssl with the "s_client" command. Note that the same hostname supported by the provided certificate must be used for the connection.
 
 The same settings are available for the Remote Metadata Adapter case.
@@ -247,20 +234,14 @@ Each TCP connection from a Remote Adapter can be subject to Remote Adapter authe
   </data_provider>
 ```
 See the configuration details in the [provided template](https://lightstreamer.com/docs/ls-server/latest/remote_adapter_conf_template/adapters.xml)
-The same settings will apply to both connections: "request/response" and "asynchronous".
-The above example can be easily extended to the new configuration. There are only two differences:
+The above example can be easily extended to the new configuration. There is only one difference:
 
-* After connecting, no initialization request will be received in the "request/response" window. The Proxy Adapter will wait for the credentials first.
-    Hence, as the first thing, a message should be issued on the "request/response" window, that should be like this:
+* After connecting, no initialization request will be received in the "telnet" window. The Proxy Adapter will wait for the credentials first.
+    Hence, as the first thing, a message should be issued on the "telnet" window, that should be like this:
     ```cmd
     1|RAC|S|user|S|user1|S|password|S|pwd1
     ```
-    and the same should be done on the "asynchronous" window.*
-* The message syntax here is slightly different but very similar; actually, for this test, you can send exactly the same message:
-    ```cmd
-    1|RAC|S|user|S|user1|S|password|S|pwd1
-    ```
-    After that, the initialization request will be received in the "request/response" window, and the interaction can go on as shown above.
+    After that, the initialization request will be received in the "telnet" window, and the interaction can go on as shown above.
 
 The same settings are available for the Remote Metadata Adapter case.
 
@@ -283,8 +264,9 @@ Authentication can (and should) be combined with TLS encryption.
 
 ## Lightstreamer Compatibility Notes
 
-- Compatible with Lightstreamer SDK for Generic Adapters version 1.8.2 or newer (Corresponding to Server version 7.1 or newer).
+- Compatible with Lightstreamer SDK for Generic Adapters version 1.9.1 or newer (Corresponding to Server version 7.4 or newer).
 - Compatible with Lightstreamer JavaScript Client Library version 6.0 or newer.
+- For a version of this example compatible with SDK for Generic Adapters since 1.8.2 (Corresponding to Server version since 7.1), please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_7_3).
 - For a version of this example compatible with SDK for Generic Adapters 1.7 to 1.8.0, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_7_0).
 - For a version of this example compatible with SDK for Generic Adapters 1.4.3, please refer to [this tag](https://github.com/Lightstreamer/Lightstreamer-example-HelloWorld-adapter-socket/tree/for_Lightstreamer_5.1).
 
